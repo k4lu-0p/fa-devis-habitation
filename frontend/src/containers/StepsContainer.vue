@@ -100,13 +100,16 @@ export default {
         }
     },
     methods: {
+        // Trigger à chaque fois que $v.$invalid change dans une step
         handleStepValidation(event) {
             const { 
                 isStepValid,
                 stepNumber,
                 stepName,
             } = event;
-
+            // Le bouton suivant est disponible lorsque l'étape courrante est validée.
+            // Le bouton suivant doit revenir à l'état disabled une fois arrivé sur une nouvelle étape.
+            // Donc valid doit repasser à false.
             if (stepNumber === this.currentStep) {
                 this.valid = event.isStepValid;
             }
