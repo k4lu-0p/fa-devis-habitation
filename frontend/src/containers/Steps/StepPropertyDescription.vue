@@ -4,13 +4,14 @@
 
 <script>
 export default {
-    name: 'PropertyDescriptionStep',
-    props: {
-        stepsData: {
-            type: Object,
-            required: true
-        },
-    }
+	name: 'PropertyDescriptionStep',
+    data() {
+        return {
+            stepName: 'property',
+            stepNumber: 2,
+            isStepValid: false,
+        }
+    },	
 }
 </script>
 

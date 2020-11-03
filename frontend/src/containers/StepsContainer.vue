@@ -5,7 +5,10 @@
 
         v-divider
 
-        v-stepper(alt-labels :value="currentStep")
+        v-stepper(
+            alt-labels
+            :value="currentStep"
+        )
             v-stepper-header
                 v-stepper-step(step="1") Le souscripteur
                 v-divider
@@ -20,24 +23,23 @@
                 v-stepper-content(step="1")
                     v-sheet
                         StepSubscriber(
-                            :steps-data="stepsData"
-                            @validation="validation"
+                            @validation="handleStepValidation"
                         )
                 v-stepper-content(step="2")
                     v-sheet
                         StepPropertyDescription(
-                            :steps-data="stepsData"
-                            @validation="validation"
+                            @validation="handleStepValidation"
                         )
                 v-stepper-content(step="3")
                     v-sheet
                         StepAdditionalInformations(
-                            :steps-data="stepsData"
-                            @validation="validation"
+                            @validation="handleStepValidation"
                         )
                 v-stepper-content(step="4")
                     v-sheet
-                        StepEstimate(:steps-data="stepsData")
+                        StepEstimate(
+                            @validation="handleStepValidation"
+                        )
                         
         v-divider
 
@@ -68,6 +70,8 @@ import StepPropertyDescription from './Steps/StepPropertyDescription';
 import StepAdditionalInformations from './Steps/StepAdditionalInformations';
 import StepEstimate from './Steps/StepEstimate';
 
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'Stepper',
     components: {
@@ -78,25 +82,36 @@ export default {
     },
     data() {
         return {
-            maxStep: 4,
-            minStep: 1,
-            currentStep: 1,
             valid: false,
         }
     },
-    props: {
-        stepsData: {
-            type: Object,
-            required: true,
-        },
+    computed: {
+        ...mapGetters({
+            maxStep: 'getMaxStepNumber',
+            minStep: 'getMinStepNumber',
+        }),
+        currentStep: {
+            get() {
+                return this.$store.getters['getCurrentStepNumber'];
+            },
+            set(value) {
+                this.$store.commit('UPDATE_CURRENT_STEP_NUMBER', value);
+            },
+        }
     },
     methods: {
-        validation(event) {
-            console.log('Checking validation...'); // DEBUG
-            console.log(event); // DEBUG
+        handleStepValidation(event) {
+            // console.log('Checking validation...'); // DEBUG
+            // console.log(event); // DEBUG
+            this.valid = event.isStepValid;
+        },
+        handleChangeStep(event) {
+            console.log("coucou")
+            console.log(event);
         },
         next() {
-            console.log(this.stepsData) // DEBUG
+
+            console.log(this.$store.getters['getCurrentStepName']);
 
             if (this.currentStep < this.maxStep) {
                 this.currentStep++;
@@ -113,3 +128,9 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+.v-stepper, .v-stepper__header  {
+    box-shadow: none !important;
+}
+</style>

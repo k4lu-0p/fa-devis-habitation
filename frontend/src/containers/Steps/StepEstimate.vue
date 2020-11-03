@@ -5,12 +5,13 @@
 <script>
 export default {
     name: 'EstimateStep',
-    props: {
-        stepsData: {
-            type: Object,
-            required: true
-        },
-    }
+    data() {
+        return {
+            stepName: 'estimate',
+            stepNumber: 4,
+            isStepValid: false,
+        }
+    },    
 }
 </script>
 

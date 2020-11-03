@@ -5,12 +5,13 @@
 <script>
 export default {
     name: 'AdditionalInformationsStep',
-    props: {
-        stepsData: {
-            type: Object,
-            required: true
-        },
-    }
+    data() {
+        return {
+            stepName: 'informations',
+            stepNumber: 3,
+            isStepValid: false,
+        }
+    },
 }
 </script>
 

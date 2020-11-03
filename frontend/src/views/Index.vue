@@ -1,9 +1,6 @@
 <template lang="pug">
     app-layout
-        steps-container(
-            @finish="submit"
-            :steps-data="stepsData"
-        )
+        steps-container(@finish="submit")
 </template>
 
 <script>
@@ -18,23 +15,7 @@ export default {
     },
     data() {
         return {
-            stepsData: {
-                subscriber: {
-                    firstname: null,
-                    lastname: null,
-                    civility: null,
-                    familySituation: null,
-                    address: null,
-                    addtionalAddress: null,
-                    city: null,
-                    birthDate: null,
-                    hasPropertySameAddress: true,
-                    cityProperty: null,
-                },
-                property: {},
-                informations: {},
-                estimate: {},
-            },
+            
         }
     },
     methods: {
