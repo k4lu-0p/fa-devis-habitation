@@ -101,12 +101,18 @@ export default {
     },
     methods: {
         handleStepValidation(event) {
-            // console.log('Checking validation...'); // DEBUG
-            // console.log(event); // DEBUG
-            this.valid = event.isStepValid;
+            const { 
+                isStepValid,
+                stepNumber,
+                stepName,
+            } = event;
+
+            if (stepNumber === this.currentStep) {
+                this.valid = event.isStepValid;
+            }
         },
         handleChangeStep(event) {
-            console.log("coucou")
+            console.log("coucou");
             console.log(event);
         },
         next() {

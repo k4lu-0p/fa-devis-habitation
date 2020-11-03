@@ -162,7 +162,7 @@ export default {
                 this.$emit('validation', {
                     stepName: this.stepName,
                     stepNumber: this.stepNumber,
-                    isStepValid: value,
+                    isStepValid: !value,
                 })
             }
         }
