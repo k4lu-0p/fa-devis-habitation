@@ -1,5 +1,5 @@
 <template lang="pug">
-   p Etape 4
+    p Etape 4
 </template>
 
 <script>

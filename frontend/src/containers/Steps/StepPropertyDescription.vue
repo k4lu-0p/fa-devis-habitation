@@ -1,6 +1,5 @@
 <template lang="pug">
     v-form(
-        ref="form"
         lazy-validation 
         v-on:submit.prevent
     )

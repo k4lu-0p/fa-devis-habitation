@@ -6,11 +6,11 @@ export default {
         choices: [
             {
                 text: 'Un exemple 1 de contexte',
-                value: 'example-1'
+                value: 'example-1',
             },
             {
                 text: 'Un exemple 2 de contexte',
-                value: 'example-2'
+                value: 'example-2',
             }
         ]
     },
