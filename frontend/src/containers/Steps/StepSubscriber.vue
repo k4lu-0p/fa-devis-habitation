@@ -1,6 +1,6 @@
 <template lang="pug">
     v-form(
-        ref="formSubscriber"
+        ref="form"
         lazy-validation 
         v-on:submit.prevent
     )
@@ -126,6 +126,7 @@
                     :label="$const.fields.subscriber.hasPropertySameAddress.label"
                     column
                 )
+
         //- Code postal / Ville du bien à assurer (To do)
         //- v-row
             v-col.py-1(cols="12")
@@ -138,6 +139,23 @@
                     :api="{url: '/api/base/communes/search'}"
                     label="Code postal / Ville"
                     @change="makeCommonAddress(displayers.commonAddress)"
+                )
+        
+        //- Navigation
+        //- v-divider
+
+        v-card-actions
+            v-spacer
+            v-btn(
+                color="primary"
+                @click="next"
+                depressed
+                :disabled="$v.$invalid"
+            )
+                span Suivant
+                v-icon(
+                    right
+                    v-text="!$v.$invalid ? 'mdi-arrow-right' : 'mdi-lock-outline'"
                 )
 
 </template>
@@ -155,18 +173,6 @@ export default {
         validationMixin,
         errorsMixin,
     ],
-    watch: {
-        // Remonte l'état de la validation du formulaire de l'étape au StepsContainer
-        '$v.$invalid': {
-            handler(value) {
-                this.$emit('validation', {
-                    stepName: this.stepName,
-                    stepNumber: this.stepNumber,
-                    isStepValid: !value,
-                })
-            }
-        }
-    },
     data() {
         return {
             stepName: 'subscriber',
@@ -201,7 +207,9 @@ export default {
         hasPropertySameAddress: { required },
         // cityProperty: { required }, // Todo
     },
-    
+    methods: {
+        next() { this.$emit('next') },
+    }
 }
 </script>
 

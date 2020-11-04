@@ -2,6 +2,13 @@ import $const from '../../constants';
 
 export default {
     computed: {
+
+        /**
+         * -----------------
+         *  STEP 1
+         * -----------------
+         */
+
         firstnameErrors () {
             const errors = [];
             if (!this.$v.firstname.$dirty) return errors;
@@ -89,5 +96,68 @@ export default {
         //     !this.$v.email.required && errors.push('E-mail is required');
         //     return errors;
         // },
+
+        /**
+         * -----------------
+         *  STEP 2
+         * -----------------
+         */
+
+        contextErrors () {
+            const errors = [];
+            if (!this.$v.context.$dirty) return errors;
+            !this.$v.context.required && errors.push(
+                $const.fields.property.context.rules.required
+            );
+            return errors
+        },
+        qualityErrors () {
+            const errors = [];
+            if (!this.$v.quality.$dirty) return errors;
+            !this.$v.quality.required && errors.push(
+                $const.fields.property.quality.rules.required
+            );
+            return errors
+        },
+        typePropertyErrors () {
+            const errors = [];
+            if (!this.$v.typeProperty.$dirty) return errors;
+            !this.$v.typeProperty.required && errors.push(
+                $const.fields.property.typeProperty.rules.required
+            );
+            return errors
+        },
+        floorErrors () {
+            const errors = [];
+            if (!this.$v.floor.$dirty) return errors;
+            !this.$v.floor.required && errors.push(
+                $const.fields.property.floor.rules.required
+            );
+            return errors
+        },
+        yearBuildingErrors () {
+            const errors = [];
+            if (!this.$v.yearBuilding.$dirty) return errors;
+            !this.$v.yearBuilding.required && errors.push(
+                $const.fields.property.yearBuilding.rules.required
+            );
+            return errors
+        },
+        destinationPropertyErrors () {
+            const errors = [];
+            if (!this.$v.destinationProperty.$dirty) return errors;
+            !this.$v.destinationProperty.required && errors.push(
+                $const.fields.property.destinationProperty.rules.required
+            );
+            return errors
+        },
+        numberMainRoomsErrors () {
+            const errors = [];
+            if (!this.$v.numberMainRooms.$dirty) return errors;
+            !this.$v.numberMainRooms.required && errors.push(
+                $const.fields.property.numberMainRooms.rules.required
+            );
+            return errors
+        },
     }
 }

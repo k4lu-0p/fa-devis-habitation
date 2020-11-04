@@ -23,45 +23,26 @@
                 v-stepper-content(step="1")
                     v-sheet
                         StepSubscriber(
-                            @validation="handleStepValidation"
+                            @next="next"
                         )
                 v-stepper-content(step="2")
                     v-sheet
                         StepPropertyDescription(
-                            @validation="handleStepValidation"
+                            @next="next"
+                            @previous="previous"
                         )
                 v-stepper-content(step="3")
                     v-sheet
                         StepAdditionalInformations(
-                            @validation="handleStepValidation"
+                            @next="next"
+                            @previous="previous"
                         )
                 v-stepper-content(step="4")
                     v-sheet
                         StepEstimate(
-                            @validation="handleStepValidation"
+                            @next="next"
+                            @previous="previous"
                         )
-                        
-        v-divider
-
-        v-card-actions
-            v-spacer
-            v-btn(
-                color="gray darken-3"
-                @click="previous"
-                depressed
-                v-if="currentStep > minStep"
-            )
-                v-icon(left) mdi-arrow-left
-                span Précédent
-            v-btn(
-                color="primary"
-                @click="next"
-                depressed
-                :disabled="!valid"
-                v-if="currentStep < maxStep"
-            )
-                span Suivant
-                v-icon(right v-text="'mdi-lock-outline'")
 </template>
 
 <script>

@@ -20,11 +20,11 @@ export default {
         label: 'Qualité de l\'assuré',
         choices: [
             {
-                label: 'Propriétaire',
-                value: 'proprietaire',
+                text: 'Propriétaire',
+                value: 'owner',
             },
             {
-                label: 'Locataire',
+                text: 'Locataire',
                 value: 'locataire',
             },
         ],
@@ -35,26 +35,26 @@ export default {
         label: 'Nature du bien',
         choices: [
             {
-                label: 'Maison',
-                value: 'maison',
+                text: 'Maison',
+                value: 'house',
             },
             {
-                label: 'Appartement',
-                value: 'appartement',
+                text: 'Appartement',
+                value: 'appartment',
             },
         ],
     },
     floor: {
         type: 'select',
         name: 'floor',
-        placeholder: 'Etage',
+        label: 'Étage',
         choices: [
             {
                 text: 'Rez-de-chaussée',
-                value: 'rez-de-chaussee'
+                value: 'rdc'
             },
             {
-                text: '1er Etage',
+                text: '1er Étage',
                 value: 'etage-1',
             }
         ],
@@ -62,7 +62,7 @@ export default {
     yearBuilding: {
         type: 'select',
         name: 'year-building',
-        placeholder: 'Année de construction',
+        label: 'Année de construction',
         choices: [
             {
                 text: 'Postérieur à 2010',
@@ -80,11 +80,11 @@ export default {
         label: 'Destination du bien',
         choices: [
             {
-                label: 'Résidence principale',
+                text: 'Résidence principale',
                 value: 'main',
             },
             {
-                label: 'Résidence secondaire',
+                text: 'Résidence secondaire',
                 value: 'secondary',
             },
         ],
