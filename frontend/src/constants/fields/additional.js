@@ -16,6 +16,7 @@ export default {
                         value: false,
                     },
                 ],
+                tooltip: 'Détail sur la question',
             },
             isCoveredWithHeavyMaterials: {
                 type: 'radio',
@@ -31,6 +32,7 @@ export default {
                         value: false,
                     },
                 ],
+                tooltip: 'Détail sur la question',
             },
             hasWoodenSkeleton: {
                 type: 'radio',

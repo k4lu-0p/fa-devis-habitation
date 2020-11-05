@@ -7,7 +7,7 @@ export default new Vuex.Store({
 	state: {
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 1,
+		currentStepNumber: 3,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
