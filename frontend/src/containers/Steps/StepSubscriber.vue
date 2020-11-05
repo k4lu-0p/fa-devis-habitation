@@ -83,17 +83,22 @@
                 )
         
         //- Code postal / Ville (To do)
-        //- v-row
+        v-row
             v-col.py-1(cols="12")
-                input-autocomplete(
-                    @input="$v.city.$touch()"
-                    @blur="$v.city.$touch()"
-                    :error-messages="cityErrors"
-                    v-model="stepsData.subscriber.city"
+                //- input-autocomplete(
+                //-     @input="$v.city.$touch()"
+                //-     @blur="$v.city.$touch()"
+                //-     :error-messages="cityErrors"
+                //-     v-model="city"
+                //-     prepend-icon="mdi-mailbox-open-up"
+                //-     :api="{url: '/api/base/communes/search'}"
+                //-     label="Code postal / Ville"
+                //-     @change="makeCommonAddress(displayers.commonAddress)"
+                //- )
+                input-commune-autocomplete(
+                    v-model="city"
                     prepend-icon="mdi-mailbox-open-up"
-                    :api="{url: '/api/base/communes/search'}"
-                    label="Code postal / Ville"
-                    @change="makeCommonAddress(displayers.commonAddress)"
+                    :error-messages="cityErrors"
                 )
 
         //- Date de naissance
@@ -161,6 +166,8 @@
 
 <script>
 
+import InputCommuneAutocomplete from '../../components/Inputs/InputCommuneAutocomplete';
+
 import mapStepFieldsToStore from '../../utils/mapStepFieldsToStore';
 import { validationMixin } from 'vuelidate';
 import errorsMixin from '../../mixins/validator/errors'; // Mixins contenant les messages d'erreurs (computed) pour Vuelidate 
@@ -172,6 +179,9 @@ export default {
         validationMixin,
         errorsMixin,
     ],
+    components: {
+        InputCommuneAutocomplete,
+    },
     data() {
         return {
             stepName: 'subscriber',
