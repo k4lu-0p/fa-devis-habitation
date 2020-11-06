@@ -7,7 +7,7 @@ export default new Vuex.Store({
 	state: {
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 1,
+		currentStepNumber: 4,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
@@ -22,10 +22,38 @@ export default new Vuex.Store({
 				hasPropertySameAddress: true,
 				cityProperty: null,
 			},
-			property: {},
-			informations: {},
-			estimate: {},
+			property: {
+				context: null,
+				quality: 'owner',
+				typeProperty: 'house',
+				floor: null,
+				yearBuilding: null,
+				destinationProperty: 'main',
+				numberMainRooms: null,
+			},
+			additional: {
+				isBuildedWithHeavyMaterials: false,
+				isCoveredWithHeavyMaterials: false,
+				hasWoodenSkeleton: false,
+				hasSwimmingPool: false,
+				hasVeranda: false,
+				hasSolarPannels: false,
+				hasClosedFireplace: false,
+				hasOpenedFireplace: false,
+				isOnUnbuildableLand: false,
+				isHistoricalMonument: false,
+				hasPartiallyProUse: false,
+				isCastleType: false,
+				isInsulated: false,
+				hasAlreadyTerminatedContract: false,
+				hasNoDisaster: false,
+			},
+			estimate: {
+				commercialCode: null,
+				desiredGuarantee: 'tiers',
+			},
 		},
+		responseApiData: {},
 	},
 	mutations: {
 		UPDATE_STEP_DATA(state, payload) {
@@ -47,6 +75,8 @@ export default new Vuex.Store({
 		getMinStepNumber: state => state.minStepNumber,
 		getCurrentStepNumber: state => state.currentStepNumber,
 		getCurrentStepName: state => state.currentStepName,
+		getResponseApiData: state => state.responseApiData,
+		hasApiAnswer: state => Object.keys(state.responseApiData).length,
 	},
 	actions: {},
 	modules: {}

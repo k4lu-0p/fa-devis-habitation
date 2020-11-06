@@ -77,7 +77,7 @@ export default {
     city: {
         type: 'search',
         name: 'city',
-        label: 'Code postal / Ville',
+        label: 'Code postal',
         icon: 'mdi-mailbox-open-up',
         rules: {
             required: 'Veuillez choisir un code postal / une ville',
@@ -112,7 +112,7 @@ export default {
     cityProperty: {
         type: 'search',
         name: 'city-property',
-        label: 'Code postal / Ville du bien à assurer',
+        label: 'Code postal du bien à assurer',
         icon: 'mdi-mailbox-open-up',
         rules: {
             required: 'Veuillez choisir un code postal / une ville',

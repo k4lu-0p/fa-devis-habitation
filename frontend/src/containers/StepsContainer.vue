@@ -23,45 +23,25 @@
                 v-stepper-content(step="1")
                     v-sheet
                         StepSubscriber(
-                            @validation="handleStepValidation"
+                            @next="next"
                         )
                 v-stepper-content(step="2")
                     v-sheet
                         StepPropertyDescription(
-                            @validation="handleStepValidation"
+                            @next="next"
+                            @previous="previous"
                         )
                 v-stepper-content(step="3")
                     v-sheet
                         StepAdditionalInformations(
-                            @validation="handleStepValidation"
+                            @next="next"
+                            @previous="previous"
                         )
                 v-stepper-content(step="4")
                     v-sheet
                         StepEstimate(
-                            @validation="handleStepValidation"
+                            @previous="previous"
                         )
-                        
-        v-divider
-
-        v-card-actions
-            v-spacer
-            v-btn(
-                color="gray darken-3"
-                @click="previous"
-                depressed
-                v-if="currentStep > minStep"
-            )
-                v-icon(left) mdi-arrow-left
-                span Précédent
-            v-btn(
-                color="primary"
-                @click="next"
-                depressed
-                :disabled="!valid"
-                v-if="currentStep < maxStep"
-            )
-                span Suivant
-                v-icon(right v-text="'mdi-lock-outline'")
 </template>
 
 <script>
@@ -114,24 +94,15 @@ export default {
                 this.valid = event.isStepValid;
             }
         },
-        handleChangeStep(event) {
-            console.log("coucou");
-            console.log(event);
-        },
         next() {
-
-            console.log(this.$store.getters['getCurrentStepName']);
-
             if (this.currentStep < this.maxStep) {
                 this.currentStep++;
-                return this.$emit('next');
             }
             return this.$emit('finish');
         },
         previous() {
             if (this.currentStep > this.minStep) {
                 this.currentStep--;
-                this.$emit('previous');
             }
         }
     },
