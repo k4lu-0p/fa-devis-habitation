@@ -1,10 +1,11 @@
 <template lang="pug">
 	v-autocomplete(
+		v-bind="$attrs"
+		v-on="$listeners"
 		v-model="selected"
 		:search-input.sync="search"
 		:loading="loading"
 		:items="items"
-		hide-details
 		hide-no-data
 		@input="$emit('input', $event)"
 	)

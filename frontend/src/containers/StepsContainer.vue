@@ -40,7 +40,6 @@
                 v-stepper-content(step="4")
                     v-sheet
                         StepEstimate(
-                            @next="next"
                             @previous="previous"
                         )
 </template>
@@ -95,24 +94,15 @@ export default {
                 this.valid = event.isStepValid;
             }
         },
-        handleChangeStep(event) {
-            console.log("coucou");
-            console.log(event);
-        },
         next() {
-
-            console.log(this.$store.getters['getCurrentStepName']);
-
             if (this.currentStep < this.maxStep) {
                 this.currentStep++;
-                return this.$emit('next');
             }
             return this.$emit('finish');
         },
         previous() {
             if (this.currentStep > this.minStep) {
                 this.currentStep--;
-                this.$emit('previous');
             }
         }
     },

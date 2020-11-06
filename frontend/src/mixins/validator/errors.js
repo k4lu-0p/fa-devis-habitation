@@ -8,7 +8,6 @@ export default {
          *  STEP 1
          * -----------------
          */
-
         firstnameErrors () {
             const errors = [];
             if (!this.$v.firstname.$dirty) return errors;
@@ -156,6 +155,29 @@ export default {
             if (!this.$v.numberMainRooms.$dirty) return errors;
             !this.$v.numberMainRooms.required && errors.push(
                 $const.fields.property.numberMainRooms.rules.required
+            );
+            return errors
+        },
+
+        /**
+         * --------------
+         * STEP 3
+         * --------------
+         */
+
+        commercialCodeErrors() {
+            const errors = [];
+            if (!this.$v.commercialCode.$dirty) return errors;
+            !this.$v.commercialCode.required && errors.push(
+                $const.fields.estimate.commercialCode.rules.required
+            );
+            return errors
+        },
+        desiredGuaranteeErrors() {
+            const errors = [];
+            if (!this.$v.desiredGuarantee.$dirty) return errors;
+            !this.$v.desiredGuarantee.required && errors.push(
+                $const.fields.estimate.desiredGuarantee.rules.required
             );
             return errors
         },
