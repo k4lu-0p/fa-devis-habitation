@@ -7,7 +7,7 @@ export default new Vuex.Store({
 	state: {
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 4,
+		currentStepNumber: 3,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
@@ -16,13 +16,18 @@ export default new Vuex.Store({
 				civility: null,
 				familySituation: null,
 				address: null,
-				addtionalAddress: null,
+				additionalAddress: null,
 				city: null,
 				birthDate: null,
 				hasPropertySameAddress: true,
-				cityProperty: null,
+				job: null,
+				email: null,
+				phone: null,
 			},
 			property: {
+				addressProperty: null,
+				additionalPropertyAddress: null,
+				cityProperty: null,
 				context: null,
 				quality: 'owner',
 				typeProperty: 'house',
@@ -30,23 +35,38 @@ export default new Vuex.Store({
 				yearBuilding: null,
 				destinationProperty: 'main',
 				numberMainRooms: null,
+				areaOutbuildings: 0,
 			},
 			additional: {
-				isBuildedWithHeavyMaterials: false,
-				isCoveredWithHeavyMaterials: false,
-				hasWoodenSkeleton: false,
-				hasSwimmingPool: false,
-				hasVeranda: false,
-				hasSolarPannels: false,
-				hasClosedFireplace: false,
-				hasOpenedFireplace: false,
-				isOnUnbuildableLand: false,
-				isHistoricalMonument: false,
-				hasPartiallyProUse: false,
-				isCastleType: false,
-				isInsulated: false,
-				hasAlreadyTerminatedContract: false,
-				hasNoDisaster: false,
+				isBuildedWithHeavyMaterials: null, // batiment principal
+				isCoveredWithHeavyMaterials: null, // batiment principal
+				hasWoodenSkeleton: null, // batiment principal
+				isOutbuildingBuildedWithHeavyMaterials: null, // dependances
+				isOutbuildingCoveredWithHeavyMaterials: null, // dependances
+				hasOutbuildingWoodenSkeleton: null, // dependances
+				hasSwimmingPool: null, // equipement
+				isAbovegroundSwimmingPool: null, // equipement
+				isCoveredSwimmingPool: null, // equipement
+				hasVeranda: null, // equipement
+				verandaSurface: 0, // equipement
+				hasSolarPannels: null, // equipement
+				solarPannelsSurface: 0, // equipement
+				hasClosedFireplace: null, // equipement
+				hasOpenedFireplace: null, // equipement
+				hasBillingClosedFireplace: null, // equipement
+				hasBillingOpenedFireplace: null, // equipement
+				isOnUnbuildableLand: null, // spécificités
+				isHistoricalMonument: null, // spécificités
+				hasPartiallyProUse: null, // spécificités
+				isCastleType: null, // spécificités
+				isInsulated: null, // spécificités
+				hasAlreadyTerminatedContract: null, // antécédents
+				hasNoDisaster: null, // antécédents
+				nbDisastersWater: null, // antécédents
+				nbDisastersCivil: null, // antécédents
+				nbDisastersSteal: null, // antécédents
+				nbDisastersOther: null, // antécédents
+				nbDisastersClimatic: null, // antécédents
 			},
 			estimate: {
 				commercialCode: null,
@@ -54,6 +74,17 @@ export default new Vuex.Store({
 			},
 		},
 		responseApiData: {},
+		/** 
+		 * Certaines sections de l'étape "Informations complémentaires" (additional step)
+		 * sont affichées/cachées en fonction des réponses de l'étape "Descriptif du bien".
+		 */  
+		additionalStepSectionsShowed: {
+			mainBuilding: true, 
+			outbuildings: false,
+			equipments: true,
+			specifities: true,
+			antecedents: true,
+		}
 	},
 	mutations: {
 		UPDATE_STEP_DATA(state, payload) {
@@ -68,6 +99,12 @@ export default new Vuex.Store({
 		UPDATE_CURRENT_STEP_NAME(state, currentStepName) {
 			state.currentStepName = currentStepName;
 		},
+		UPDATE_ADDITIONAL_STEP_SECTION_SHOWED(state, additionalStepSectionsShowed) {
+			state.additionalStepSectionsShowed = {
+				...state.additionalStepSectionsShowed,
+				...additionalStepSectionsShowed,
+			}
+		}
 	},
 	getters: {
 		getStep: (state) => (step) => state.stepsData[step],
@@ -77,6 +114,7 @@ export default new Vuex.Store({
 		getCurrentStepName: state => state.currentStepName,
 		getResponseApiData: state => state.responseApiData,
 		hasApiAnswer: state => Object.keys(state.responseApiData).length,
+		getAdditionalStepSectionsShowed: state => state.additionalStepSectionsShowed,
 	},
 	actions: {},
 	modules: {}
