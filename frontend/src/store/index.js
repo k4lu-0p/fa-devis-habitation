@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -7,7 +8,7 @@ export default new Vuex.Store({
 	state: {
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 3,
+		currentStepNumber: 2,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
@@ -36,6 +37,8 @@ export default new Vuex.Store({
 				destinationProperty: 'main',
 				numberMainRooms: null,
 				areaOutbuildings: 0,
+				movableCapitalToBeGuaranteed: null,
+				objectValuableCapital: null,
 			},
 			additional: {
 				isBuildedWithHeavyMaterials: null, // batiment principal
@@ -84,7 +87,8 @@ export default new Vuex.Store({
 			equipments: true,
 			specifities: true,
 			antecedents: true,
-		}
+		},
+		fieldsProvidedByAPI: [],
 	},
 	mutations: {
 		UPDATE_STEP_DATA(state, payload) {
@@ -104,6 +108,9 @@ export default new Vuex.Store({
 				...state.additionalStepSectionsShowed,
 				...additionalStepSectionsShowed,
 			}
+		},
+		UPDATE_FIELDS_PROVIDED_BY_API(state, fieldsProvidedByAPI) {
+			state.fieldsProvidedByAPI = fieldsProvidedByAPI;
 		}
 	},
 	getters: {
@@ -115,7 +122,43 @@ export default new Vuex.Store({
 		getResponseApiData: state => state.responseApiData,
 		hasApiAnswer: state => Object.keys(state.responseApiData).length,
 		getAdditionalStepSectionsShowed: state => state.additionalStepSectionsShowed,
+		// Dynamic fields
+		getNumberMainRoomsChoices: (state) => {
+			return state.fieldsProvidedByAPI.map((item) => {
+				return {
+					text: item.text,
+					value: item.value,
+				}
+			})
+		},
+		// Les choix disponible pour ce champ, dépendent du choix effectué sur le nombre de pièces principales
+		getMovableCapitalToBeGuaranteedChoices: (state) => {
+			let choices = [];
+			if (state.stepsData.property.numberMainRooms) {
+				choices = state.fieldsProvidedByAPI.find((item) => {
+					return item.value === state.stepsData.property.numberMainRooms
+				})['movableCapitalToBeGuaranteed']
+
+				choices = choices.map((item) => {
+					return {
+						text: item,
+						value: item,
+					}
+				})
+			}
+			return choices;
+		}
 	},
-	actions: {},
+	actions: {
+		async fetchFieldsProvidedByAPI({ commit }) {
+			let baseURL = '';
+			if (process.env.NODE_ENV === 'development') {
+				baseURL = 'http://localhost:3333';
+			}
+			let url = `${baseURL}/api/devis/habitation/champs-dynamiques`;
+			const { data: fieldsProvidedByAPI } = await axios.get(url);
+			commit('UPDATE_FIELDS_PROVIDED_BY_API', fieldsProvidedByAPI);
+		}
+	},
 	modules: {}
 })

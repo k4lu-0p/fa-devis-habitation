@@ -101,6 +101,7 @@
                     )
 
             //- Nombre de pièces principales (avec tooltip)
+            //- FOURNI PAR API
             v-row
                 v-col.pb-1.pt-2(cols="5")
                     div.d-flex.flex-row.align-center(style="height: 100%;")
@@ -116,7 +117,7 @@
                         :error-messages="numberMainRoomsErrors"
                         @input="$v.numberMainRooms.$touch()"
                         @blur="$v.numberMainRooms.$touch()"
-                        :items="$const.fields.property.numberMainRooms.choices"
+                        :items="numberMainRoomsChoices"
                         :prepend-icon="$const.fields.property.numberMainRooms.icon"
                         label="Choisir dans la liste ci-dessous"
                     )
@@ -145,6 +146,7 @@
                     )
 
             //- Capital mobilier à garantir
+            //- FOURNI PAR API
             v-row(v-if="numberMainRooms")
                 v-col.pb-1.pt-2(cols="5")
                     div.d-flex.flex-row.align-center(style="height: 100%;")
@@ -155,7 +157,7 @@
                         :error-messages="movableCapitalToBeGuaranteedErrors"
                         @input="$v.movableCapitalToBeGuaranteed.$touch()"
                         @blur="$v.movableCapitalToBeGuaranteed.$touch()"
-                        :items="$const.fields.property.movableCapitalToBeGuaranteed.choices"
+                        :items="movableCapitalToBeGuaranteedChoices"
                         :prepend-icon="$const.fields.property.movableCapitalToBeGuaranteed.icon"
                         label="Choisir dans la liste ci-dessous"
                     )
@@ -201,6 +203,7 @@
 
 <script>
 import mapStepFieldsToStore from '../../utils/mapStepFieldsToStore';
+import { mapGetters } from 'vuex';
 import { validationMixin } from 'vuelidate';
 import errorsMixin from '../../mixins/validator/errors'; // Mixins contenant les messages d'erreurs (computed) pour Vuelidate 
 import { required, numeric } from 'vuelidate/lib/validators';
@@ -241,6 +244,10 @@ export default {
         return rules;
     },
     computed: {
+        ...mapGetters({
+            numberMainRoomsChoices: 'getNumberMainRoomsChoices',
+            movableCapitalToBeGuaranteedChoices: 'getMovableCapitalToBeGuaranteedChoices',
+        }),
         ...mapStepFieldsToStore([
             'context',
             // 'quality', // cas particulier
@@ -251,7 +258,7 @@ export default {
             'floor',
             'yearBuilding',
             'destinationProperty',
-            'numberMainRooms',
+            // 'numberMainRooms', // cas particulier
         ], 'property'),
         quality: {
             get() {
@@ -312,6 +319,20 @@ export default {
                 this.$store.commit('UPDATE_STEP_DATA', { stepName: 'property', stepData, });
             }
         },
+        numberMainRooms: {
+            get() {
+                return this.$store.getters['getStep']('property')['numberMainRooms'];
+            },
+            set(value) {
+                let stepData = { 
+                    numberMainRooms: value,
+                    // Réinitialise le champ Capital Mobilier à garantir si celui-ci change
+                    movableCapitalToBeGuaranteed: null,
+                };
+
+                this.$store.commit('UPDATE_STEP_DATA', { stepName: 'property', stepData, });
+            }
+        }
     },
     methods: {
         next() { this.$emit('next') },

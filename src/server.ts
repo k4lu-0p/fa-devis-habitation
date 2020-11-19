@@ -4,9 +4,9 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as _ from 'lodash';
-const xml2js = require('xml2js');
-
+import * as cors from 'cors';
 import bodyParser from 'body-parser';
+const xml2js = require('xml2js');
 
 // Web Services SOAP
 import swp_retourneTarif from './services/ws/swp_retourneTarif';
@@ -19,12 +19,15 @@ const app = express();
 // Middlewares
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+if (process.env.NODE_ENV !== 'production') {
+    app.use(cors())
+}
 
 // Bypass problem certificat
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // Frontend: declare static assets
-app.use('/static', express.static(__dirname + '/public'));
+app.use('/', express.static(__dirname + '/public'));
 
 // Frontend: render app
 app.get('/', (req, res) => {
@@ -62,9 +65,9 @@ app.get('/api/devis/habitation/champs-dynamiques', async (req, res) => {
         response = response.map(r => {
             let items = r['sListeContenuAutoriseSepareeParDesPVirgule'][0].split(';');
             return {
-                value: r['sCodeARenvoyer'],
-                label: r['sLibelle'],
-                items,
+                value: Number(r['sCodeARenvoyer'][0]),
+                text: r['sLibelle'][0],
+                movableCapitalToBeGuaranteed: items,
             }
         })
 
