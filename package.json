@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "start:watch": "nodemon",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,30 @@
   },
   "homepage": "https://github.com/kalu-op/FA-devis-habitation#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "easy-soap-request": "^3.5.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.20",
     "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.8",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
   }
 }
