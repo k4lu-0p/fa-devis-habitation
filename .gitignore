@@ -1,2 +1,10 @@
-./node_modules
-./.env
+node_modules
+.env
+
+# ignore dist front
+src/public/**/*.png
+src/public/**/*.js
+src/public/**/*.css
+src/public/**/*.html
+src/public/**/*.map
+src/public/**/*.ico

@@ -1,11 +1,15 @@
 <template lang="pug">
     app-layout
-        steps-container(@finish="submit")
+        steps-container(@next="middlewareSteps")
+        v-overlay(:value="loading")
+            v-progress-circular(indeterminate size="64")
+
 </template>
 
 <script>
 import AppLayout from '../layouts/AppLayout.vue';
 import StepsContainer from '../containers/StepsContainer.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Index',
@@ -13,14 +17,20 @@ export default {
         AppLayout,
         StepsContainer,
     },
-    data() {
-        return {
-            
-        }
+    computed: {
+        ...mapGetters({
+            maxStep: 'getMaxStepNumber',
+            minStep: 'getMinStepNumber',
+            loading: 'getLoading',
+        }),
     },
     methods: {
-        submit() {
-            console.log("SUBMIT DATA");
+        // à chaques validation d'étape
+        middlewareSteps(currentStep) {
+            // soumission du formulaire arrivé à l'étape 4
+            if (currentStep === 4) {
+                this.$store.dispatch('fetchFormulasWithStepsData');
+            }
         }
     }
 }

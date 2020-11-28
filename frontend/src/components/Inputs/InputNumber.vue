@@ -28,23 +28,35 @@
             decimals: {
                 type: Number,
                 default: 2
+            },
+            numType: {
+                type: String,
+                default: true,
             }
         },
         methods: {
             increment () {
-                let emit = (parseFloat(this.value || 0) + this.step)
-                    .toFixed(this.decimals)
+                let emit = (parseInt(this.value || 0) + this.step);
+
+                if (this.numType === 'integer') {
+                    let emit = (parseFloat(this.value || 0) + this.step)
+                        .toFixed(this.decimals)
+                }
 
                 if (typeof this.max !== 'undefined' && emit <= this.max) {
-                    this.$emit('input', emit)
+                    return this.$emit('input', emit)
                 }
             },
             decrement () {
-                let emit = (parseFloat(this.value || 0) - this.step)
-                    .toFixed(this.decimals)
+                let emit = (parseInt(this.value || 0) - this.step);
+
+                if (this.numType === 'float') {
+                    emit = (parseFloat(this.value || 0) - this.step)
+                        .toFixed(this.decimals)
+                }
 
                 if (typeof this.min !== 'undefined' && emit >= this.min) {
-                    this.$emit('input', emit)
+                    return this.$emit('input', emit)
                 }
             }
         }

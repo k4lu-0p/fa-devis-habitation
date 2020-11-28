@@ -1,5 +1,5 @@
 export default {
-    firstname: {
+    firstname: { //--OK
         type: 'text',
         name: 'firstname',
         label: 'Prénom',
@@ -8,7 +8,7 @@ export default {
             required: 'Votre prénom est obligatoire',
         },
     },
-    lastname: {
+    lastname: { //--OK
         type: 'text',
         name: 'lastname',
         label: 'Nom',
@@ -17,7 +17,7 @@ export default {
             required: 'Votre nom est obligatoire',
         },
     },
-    civility: {
+    civility: { //--OK
         type: 'select',
         name: 'civility',
         label: 'Civilité',
@@ -28,15 +28,34 @@ export default {
         choices: [
             {
                 text: 'Monsieur',
-                value: 'monsieur'
+                value: 'M'
             },
             {
                 text: 'Madame',
-                value: 'madame',
+                value: 'F',
             }
         ],
     },
-    familySituation: {
+    gender: { //--OK
+        type: 'select',
+        name: 'gender',
+        label: 'Sexe',
+        icon: 'mdi-gender-male-female',
+        rules: {
+            required: 'Votre sexe est obligatoire',
+        },
+        choices: [
+            {
+                text: 'Masculin',
+                value: 'M'
+            },
+            {
+                text: 'Féminin',
+                value: 'F',
+            }
+        ],
+    },
+    familySituation: { //--OK
         type: 'select',
         name: 'family-situation',
         label: 'Situation Familiale',
@@ -47,15 +66,23 @@ export default {
         choices: [
             {
                 text: 'Célibataire',
-                value: 'celibataire'
+                value: 'CELIBATAIRE'
             },
             {
-                text: 'En concubinage',
-                value: 'concubinage',
+                text: 'Concubinage',
+                value: 'CONCUBINAGE',
             },
             {
-                text: 'Mariée',
-                value: 'mariee'
+                text: 'Marié(e)',
+                value: 'MARIE',
+            },
+            {
+                text: 'Pacsé(e)',
+                value: 'PACS',
+            },
+            {
+                text: 'Veuf / Veuve',
+                value: 'VEUF',
             },
         ],
     },
@@ -70,7 +97,7 @@ export default {
     },
     additionalAddress: {
         type: 'text',
-        name: 'addtional-address',
+        name: 'additional-address',
         label: 'Complément d\'adresse',
         icon: 'mdi-road-variant',
     },
@@ -90,9 +117,10 @@ export default {
         icon: 'mdi-card-account-details',
         rules: {
             required: 'Votre date de naissance est obligatoire',
+            checkBirthdate: 'Vous devez être âgé d\'au moins 18 ans'
         },
     },
-    hasPropertySameAddress: {
+    hasPropertySameAddress: { //--OK
         type: 'radio',
         name: 'has-property-same-address',
         rules: {
@@ -109,13 +137,83 @@ export default {
             },
         ],
     },
-    cityProperty: {
-        type: 'search',
-        name: 'city-property',
-        label: 'Code postal du bien à assurer',
-        icon: 'mdi-mailbox-open-up',
+    job: { //--OK
+        type: 'select',
+        name: 'job',
+        label: 'Profession',
+        icon: 'mdi-briefcase',
         rules: {
-            required: 'Veuillez choisir un code postal / une ville',
+            required: 'Veuillez selectionner votre type de profession',
         },
-    }
+        choices: [
+            {
+                text: 'Salarié non cadre',
+                value: 'SALANONCADRE',
+            },
+            {
+                text: 'Salarié cadre',
+                value: 'SALACADRE',
+            },
+            {
+                text: 'Fonctionnaire',
+                value: 'FONCTIONNAIRE',
+            },
+            {
+                text: 'Militaire',
+                value: 'MILITAIRE',
+            },
+            {
+                text: 'Agriculteur et assimilé',
+                value: 'AGRICU',
+            },
+            {
+                text: 'Commerçant / Artisan',
+                value: 'COMM_ARTISAN',
+            },
+            {
+                text: 'Profession libérale',
+                value: 'PROF_LIB',
+            },
+            {
+                text: 'Chef d\'entreprise',
+                value: 'CHEF_ENTR',
+            },
+            {
+                text: 'Étudiant',
+                value: 'ETUDIANT',
+            },
+            {
+                text: 'Retraité',
+                value: 'RETRAITE',
+            },
+            {
+                text: 'Sans emploi',
+                value: 'SANSEMPLOI',
+            },
+            {
+                text: 'Autre',
+                value: 'AUTRE',
+            },
+        ]
+    },
+    email: { //--OK
+        type: 'mail',
+        name: 'email',
+        label: 'Email',
+        icon: 'mdi-at',
+        rules: {
+            required: 'Veuillez saisir une adresse email',
+            email: 'Veuillez saisir une adresse email valide',
+        },
+    },
+    phone: { //--OK
+        type: 'text',
+        name: 'phone',
+        label: 'Numéro de téléphone',
+        icon: 'mdi-phone',
+        rules: {
+            required: 'Veuillez saisir votre numéro de téléphone',
+            phoneFrenchRegex: 'Veuillez saisir un numéro de téléphone valide'
+        },
+    },
 }
