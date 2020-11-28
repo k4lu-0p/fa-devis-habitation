@@ -2,8 +2,8 @@ export default {
     options: { customProperties: true },
     themes: {
         light: {
-            // primary: { base: '#b7c260' },
-            primary: { base: '#053cb3' },
+            primary: { base: '#b7c260' },
+            // primary: { base: '#053cb3' },
             secondary: { base: '#ec732c' },
             tertiary: { base: '#B9E4C9'},
             accent: { base: '#00bcd4' },

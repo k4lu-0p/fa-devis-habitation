@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/devis/habitation',
+    path: '/',
     name: 'Index',
     component: Index,
   },

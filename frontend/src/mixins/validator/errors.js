@@ -52,7 +52,7 @@ export default {
             return this.makeFieldValidationsErrors('subscriber', 'job', ['required']);
         },
         emailErrors () {
-            return this.makeFieldValidationsErrors('subscriber', 'hasPropertySameAddress', [
+            return this.makeFieldValidationsErrors('subscriber', 'email', [
                 'required',
                 'email',
             ]);

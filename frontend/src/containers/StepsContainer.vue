@@ -98,7 +98,7 @@ export default {
             if (this.currentStep < this.maxStep) {
                 this.currentStep++;
             }
-            return this.$emit('finish');
+            return this.$emit('next', this.currentStep);
         },
         previous() {
             if (this.currentStep > this.minStep) {

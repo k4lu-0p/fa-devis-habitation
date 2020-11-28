@@ -141,7 +141,7 @@ export default {
     numberMainRooms: { //--FOURNI PAR API
         type: 'select',
         name: 'number-main-rooms',
-        label: 'Nombre de pièces principales (API)',
+        label: 'Nombre de pièces principales',
         choices: [
             {text: 'TEST', value: 'TEST'}
         ],
@@ -161,7 +161,7 @@ export default {
     movableCapitalToBeGuaranteed: { //--FOURNI PAR API
         type: 'select',
         name: 'movable-capital-to-be-guaranteed',
-        label: 'Capital mobilier à garantir (API)',
+        label: 'Capital mobilier à garantir',
         choices: [
             {
                 text: 'TEST',

@@ -274,8 +274,8 @@ export default {
 
                 // Cache / Affiche les sections de l'étape suivante en fonction de la réponse
                 this.$store.commit('UPDATE_ADDITIONAL_STEP_SECTION_SHOWED', {
-                        mainBuilding: true, 
-                        equipments: true,
+                    mainBuilding: true, 
+                    equipments: true,
                 });
                 if (value === this.$const.fields.property.quality.choices[1]['value']) {
                     this.$store.commit('UPDATE_ADDITIONAL_STEP_SECTION_SHOWED', {

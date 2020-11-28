@@ -79,6 +79,13 @@
                                             :placeholder="child.placeholder"
                                             row
                                         )
+        //- Google Captcha
+        v-row
+            v-col.d-flex.justify-center.py-10(cols="12")
+                captcha(
+                    @verify="handleVerifyTokenCaptcha($event)"
+                    @expired="handleExpiredTokenCaptcha"
+                )
 
         //- Navigation          
         v-card-actions
@@ -104,14 +111,16 @@
 </template>
 
 <script>
+import Captcha from '../../components/Captcha';
+import Alert from '../../components/Alert';
+
 import mapStepFieldsToStore from '../../utils/mapStepFieldsToStore';
 import { validationMixin } from 'vuelidate';
 import displayChildrenQuestions from '../../mixins/additional/displayChildrenQuestions'; // Gestion de l'affichage conditionnel des questions enfants
 import unauthorizedResponses from '../../mixins/additional/unauthorizedResponses'; // Gestion des réponses non autorisé avec affichage d'un message
 import errorsMixin from '../../mixins/validator/errors'; // Mixins contenant les messages d'erreurs (computed) pour Vuelidate 
-import { required, numeric, minValue } from 'vuelidate/lib/validators'; // Mixins des régles à appliquer sur les champs (methods) pour Vuelidate
+import { required, numeric, minValue, requiredIf } from 'vuelidate/lib/validators'; // Mixins des régles à appliquer sur les champs (methods) pour Vuelidate
 import { mapGetters } from 'vuex';
-import Alert from '../../components/Alert';
 
 export default {
     mixins: [
@@ -120,6 +129,7 @@ export default {
     ],
     components: {
         Alert,
+        Captcha,
     },
     name: 'AdditionalInformationsStep',
     data() {
@@ -131,7 +141,11 @@ export default {
         }
     },
     validations() {
-        let rulesEnabled = {}
+        let rulesEnabled = { 
+            tokenCaptcha: {
+                checked: value => value !== '',
+            },
+        }
         let rulesAvailable = {
             equipmentsRules: {
                 hasSwimmingPool: { required }, // equipement
@@ -240,6 +254,8 @@ export default {
     methods: {
         next() { this.$emit('next') },
         previous() { this.$emit('previous') },
+        handleVerifyTokenCaptcha(token) { this.tokenCaptcha = token; },
+        handleExpiredTokenCaptcha() { this.tokenCaptcha = ''; }
     },
     computed: {
         ...mapStepFieldsToStore([
@@ -266,7 +282,7 @@ export default {
             'isCastleType', // spécificité
             'isInsulated', // spécificité
             'hasAlreadyTerminatedContract', // antécédent
-            'hasNoDisaster', // antécédent
+            // 'hasNoDisaster', // antécédent // cas particulier
             'nbDisastersWater', // antécédent
             'nbDisastersCivil', // antécédent
             'nbDisastersSteal', // antécédent
@@ -281,6 +297,30 @@ export default {
         ...mapGetters({
             additionalStepSectionsShowed: 'getAdditionalStepSectionsShowed',
         }),
+        hasNoDisaster: {
+            get() {
+                return this.$store.getters['getStep']('additional')['hasNoDisaster'];
+            },
+            set(value) {
+                let stepData = { hasNoDisaster: value };
+                // Si je repasse de Propriétaire (ayant défini une date de construction) vers Locataire 
+                if (value === this.$const.fields.additional.antecedents.questions.hasNoDisaster.choices[0]['value']) {
+                    stepData = { 
+                        ...stepData,
+                        nbDisastersWater: null,
+                        nbDisastersCivil: null,
+                        nbDisastersSteal: null,
+                        nbDisastersOther: null,
+                        nbDisastersClimatic: null,
+                    };
+                }
+                this.$store.commit('UPDATE_STEP_DATA', { stepName: 'additional', stepData, });
+            },
+        },
+        tokenCaptcha: {
+            get() { return this.$store.getters['getTokenCaptcha']},
+            set(value) { this.$store.commit('UPDATE_TOKEN_CAPTCHA', value) }
+        }
     },
 }
 </script>

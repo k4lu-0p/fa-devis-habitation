@@ -3,6 +3,7 @@
         v-bind="$attrs"
         :value="value"
         @input="onInput"
+        @change="$emit('change', $event)"
         @blur="$emit('blur')"
     )
 </template>

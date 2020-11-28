@@ -428,6 +428,8 @@ export default {
                                 value: -1,
                             }
                         ],
+                        unauthorizedResponse: -1,
+
                     },
                     nbDisastersCivil: { //--OK
                         type: 'select',
@@ -476,11 +478,12 @@ export default {
                                 value: -1,
                             }
                         ],
+                        unauthorizedResponse: -1,
                     },
                     nbDisastersOther: { //--OK
                         type: 'select',
-                        name: 'nb-disasters',
-                        label: 'Nombre de sinistres',
+                        name: 'nb-disasters-other',
+                        label: 'Nombre d\'autres sinistres',
                         placeholder: 'Choisir dans la liste',
                         choices: [
                             {
@@ -500,6 +503,7 @@ export default {
                                 value: -1,
                             }
                         ],
+                        unauthorizedResponse: -1,
                     },
                     nbDisastersClimatic: { //--OK
                         type: 'select',
@@ -524,6 +528,7 @@ export default {
                                 value: -1,
                             }
                         ],
+                        unauthorizedResponse: -1,
                     },
                 }
             },

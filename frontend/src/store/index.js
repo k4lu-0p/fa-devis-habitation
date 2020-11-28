@@ -6,9 +6,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
+		loading: false,
+		status: 'new_form',
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 2,
+		currentStepNumber: 1,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
@@ -71,10 +73,7 @@ export default new Vuex.Store({
 				nbDisastersOther: null, // antécédents
 				nbDisastersClimatic: null, // antécédents
 			},
-			estimate: {
-				commercialCode: null,
-				desiredGuarantee: 'tiers',
-			},
+			commercialCode: null,
 		},
 		responseApiData: {},
 		/** 
@@ -89,8 +88,15 @@ export default new Vuex.Store({
 			antecedents: true,
 		},
 		fieldsProvidedByAPI: [],
+		formResult: null,
+		formulaNameSelected: '',
+		blobImg: null,
+		tokenCaptcha: '',
 	},
 	mutations: {
+		UPDATE_LOADING(state, isLoading) {
+			state.loading = isLoading;
+		},
 		UPDATE_STEP_DATA(state, payload) {
 			state.stepsData[payload.stepName] = {
 				...state.stepsData[payload.stepName],
@@ -111,9 +117,25 @@ export default new Vuex.Store({
 		},
 		UPDATE_FIELDS_PROVIDED_BY_API(state, fieldsProvidedByAPI) {
 			state.fieldsProvidedByAPI = fieldsProvidedByAPI;
+		},
+		UPDATE_FORM_RESULT(state, formResult) {
+			state.formResult = formResult;
+		},
+		UPDATE_FORMULA_NAME_SELECTED(state, formulaNameSelected) {
+			state.formulaNameSelected = formulaNameSelected;
+		},
+		UPDATE_BLOB_IMG(state, blobImg) {
+			state.blobImg = blobImg;
+		},
+		UPDATE_COMMERCIAL_CODE(state, commercialCode) {
+			state.stepsData.commercialCode = commercialCode;
+		},
+		UPDATE_TOKEN_CAPTCHA(state, tokenCaptcha) {
+			state.tokenCaptcha = tokenCaptcha;
 		}
 	},
 	getters: {
+		getLoading: (state) => state.loading,
 		getStep: (state) => (step) => state.stepsData[step],
 		getMaxStepNumber: state => state.maxStepNumber,
 		getMinStepNumber: state => state.minStepNumber,
@@ -131,23 +153,28 @@ export default new Vuex.Store({
 				}
 			})
 		},
-		// Les choix disponible pour ce champ, dépendent du choix effectué sur le nombre de pièces principales
 		getMovableCapitalToBeGuaranteedChoices: (state) => {
-			let choices = [];
+			let movableCapitalToBeGuaranteedChoices = [];
 			if (state.stepsData.property.numberMainRooms) {
-				choices = state.fieldsProvidedByAPI.find((item) => {
+				// Les choix disponible pour ce champ, dépendent du choix effectué sur le nombre de pièces principales
+				movableCapitalToBeGuaranteedChoices = state.fieldsProvidedByAPI.find((item) => {
 					return item.value === state.stepsData.property.numberMainRooms
 				})['movableCapitalToBeGuaranteed']
 
-				choices = choices.map((item) => {
+				// Ensuite on map le choix pour être compatible avec le select de Vuetify
+				movableCapitalToBeGuaranteedChoices = movableCapitalToBeGuaranteedChoices.map((item) => {
 					return {
 						text: item,
 						value: item,
 					}
 				})
 			}
-			return choices;
-		}
+			return movableCapitalToBeGuaranteedChoices;
+		},
+		getFormResult: (state) => state.formResult,
+		getBlobImg: (state) => state.blobImg,
+		getCommercialCode: (state) => state.stepsData.commercialCode,
+		getTokenCaptcha: (state) => state.tokenCaptcha,
 	},
 	actions: {
 		async fetchFieldsProvidedByAPI({ commit }) {
@@ -155,9 +182,75 @@ export default new Vuex.Store({
 			if (process.env.NODE_ENV === 'development') {
 				baseURL = 'http://localhost:3333';
 			}
-			let url = `${baseURL}/api/devis/habitation/champs-dynamiques`;
-			const { data: fieldsProvidedByAPI } = await axios.get(url);
-			commit('UPDATE_FIELDS_PROVIDED_BY_API', fieldsProvidedByAPI);
+			let url = `${baseURL}${process.env.VUE_APP_MEDIALOG_ROUTE_SWP_RETOURNE_NB_PIECES_CONTENU}`;
+
+			commit('UPDATE_LOADING', true);
+
+			try {
+				const { data: fieldsProvidedByAPI } = await axios.get(url);
+				commit('UPDATE_FIELDS_PROVIDED_BY_API', fieldsProvidedByAPI);
+			} catch (error) {
+				console.error(error);
+			}
+
+			commit('UPDATE_LOADING', false);
+		},
+		async fetchFormulasWithStepsData({ commit, state }) {
+			let baseURL = '';
+			if (process.env.NODE_ENV === 'development') {
+				baseURL = 'http://localhost:3333';
+			}
+
+			const url = `${baseURL}${process.env.VUE_APP_MEDIALOG_ROUTE_SWP_RETOURNE_TARIF}`;
+			
+			const body = {
+				formData: state.stepsData,
+				tokenCaptcha: state.tokenCaptcha,
+			};
+			
+			commit('UPDATE_LOADING', true);
+
+			try {
+				const { data: tableauTarification } = await axios.post(url, body);
+				commit('UPDATE_FORM_RESULT', tableauTarification);
+			} catch(error) {
+				console.error(error);
+			}
+
+			commit('UPDATE_LOADING', false);
+		},
+		async fetchPdfFile({ commit, state }) {
+			let baseURL = '';
+			if (process.env.NODE_ENV === 'development') {
+				baseURL = 'http://localhost:3333';
+			}
+
+			const url = `${baseURL}${process.env.VUE_APP_MEDIALOG_ROUTE_SWP_RETOURNE_TARIF_PDF}`;
+
+			commit('UPDATE_LOADING', true);
+			
+			const body = {
+				formData: state.stepsData,
+				formulaNameSelected: state.formulaNameSelected,
+			};
+
+			const { data: { devisPDF } } = await axios.post(url, body);
+
+			if (devisPDF && devisPDF.sContenuFichierBase64) {
+				const byteCharacters = atob(devisPDF.sContenuFichierBase64);
+				const byteNumbers = new Array(byteCharacters.length);
+
+				for (let i = 0; i < byteCharacters.length; i++) {
+						byteNumbers[i] = byteCharacters.charCodeAt(i);
+				}
+				const byteArray = new Uint8Array(byteNumbers);
+				const file = new Blob([byteArray], { type: 'application/pdf;base64' });
+				const fileURL = URL.createObjectURL(file);
+				const blobImg = fileURL;
+
+				commit('UPDATE_BLOB_IMG', blobImg);
+				commit('UPDATE_LOADING', false);
+			}
 		}
 	},
 	modules: {}

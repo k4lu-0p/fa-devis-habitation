@@ -36,7 +36,7 @@
             v-row
                 v-col.py-1(cols="12")
                     input-select(
-                        v-model.lazy="civility"
+                        v-model="civility"
                         required
                         :error-messages="civilityErrors"
                         @input="$v.civility.$touch()"
@@ -50,7 +50,7 @@
             v-row
                 v-col.py-1(cols="12")
                     input-select(
-                        v-model.lazy="familySituation"
+                        v-model="familySituation"
                         required
                         :error-messages="familySituationErrors"
                         @input="$v.familySituation.$touch()"
@@ -64,7 +64,7 @@
             v-row
                 v-col.py-1(cols="12")
                     input-select(
-                        v-model.lazy="job"
+                        v-model="job"
                         required
                         :error-messages="jobErrors"
                         @input="$v.job.$touch()"
@@ -149,11 +149,11 @@
                         @blur="$v.city.$touch()"
                     )
     
-            //- Le bien à assurer se situe ...
+            //- Le bien à assurer se situe à la même adresse
             v-row
                 v-col.py-1.pl-8(cols="12")
                     input-radio-list(
-                        v-model.lazy="hasPropertySameAddress"
+                        v-model="hasPropertySameAddress"
                         required
                         :error-messages="hasPropertySameAddressErrors"
                         @input="$v.hasPropertySameAddress.$touch()"
@@ -292,7 +292,16 @@ export default {
         return rules;
     },
     methods: {
-        next() { this.$emit('next') },
+        next() {
+            // Si c'est la même adresse pour le bien
+            if (this.hasPropertySameAddress) {
+                let stepName = 'property';
+                this.$store.commit('UPDATE_STEP_DATA', { stepName, stepData: { addressProperty: this.address }, });
+                this.$store.commit('UPDATE_STEP_DATA', { stepName, stepData: { additionalPropertyAddress: this.additionalAddress }, });
+                this.$store.commit('UPDATE_STEP_DATA', { stepName, stepData: { cityProperty: this.city }, });
+            }
+            this.$emit('next');
+        },
     }
 }
 </script>

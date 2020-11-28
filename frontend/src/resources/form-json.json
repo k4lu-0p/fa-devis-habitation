@@ -1,0 +1,77 @@
+{
+  "DevisHabitation": {
+    "Client": {
+      "IDFicheClient": [], // non
+      "nom": "TRUCHE",
+      "prenom": "JEAN-MARC",
+      "dateDeNaissance": "16/09/1978",
+      "sexe": "M",
+      "profession": "SALACADRE", // non
+      "situationFamiliale": "CONCUBINAGE",
+      "AdresseLigne1": "15 rue jean de vienne",
+      "AdresseLigne2": [],
+      "codePostal": "25000",
+      "ville": "BESANCON",
+      "telephone": [],
+      "email": "jmtruche@gmail.com"
+    },
+    "DescriptionBien1": {
+      "AdresseLigne1": "15 rue jean de vienne",
+      "AdresseLigne2": [],
+      "codePostal": "25000",
+      "ville": "BESANCON",
+      "contexteDemande": "BIEN_ASSURE_DEPUIS_PLUS_D_1AN",
+      "qualiteAssure": "PRO",
+      "natureDuBien": "MAISON",
+      "etageSiAppartement": [],
+      "anneeConstruction": "AVANT1950",
+      "destinationBien": "RESIDENCE_SECONDAIRE",
+      "nombrePiecePrincipal": "2",
+      "surfaceHabitable": "120",
+      "presenceDependance": "OUI",
+      "surfaceDependances": "80",
+      "capitalMobilierAGarantir": "25000",
+      "dontCapitablObjetValeurAGarantir": "3000",
+      "batimentPrincipal": {
+        "construitEnMateriauxDurs": "OUI",
+        "couvertEnMaterieuxDurs": "OUI",
+        "ossatureBoisOuBardeeBois": "NON"
+      },
+      "dependance": {
+        "construitEnMateriauxDurs": "OUI",
+        "couvertEnMaterieuxDurs": "OUI",
+        "ossatureBoisOuBardeeBois": "NON"
+      },
+      "presencePiscine": "NON",
+      "piscineHorsSol": [],
+      "piscineCouverte": [],
+      "presenceVeranda": "OUI",
+      "surfaceVeranda": "25",
+      "presencePanneauxSolairesOuPhotovoltaique": "NON",
+      "surfaceDesPanneauxSolaires": [],
+      "presencePoeleABoisOuCheFerme": "OUI",
+      "intallProFacturePoeleABoisOuCheFerme": "OUI",
+      "presenceChemineeFoyerOuvert": "NON",
+      "intallProFactureChemineeFoyerOuvert": [],
+      "habitationSurTerrainInconstructible": "NON",
+      "monumentHistorique": "NON",
+      "bienUtiliseMemePartiellementPourUsagePRO": "NON",
+      "bienDeTypeChateauOuManoir": "NON",
+      "bienIsoleAPlusDe200MTouteHabitation": "NON"
+    },
+    "AntecedentsAssurances": {
+      "resilieParAutreAssureur60DerniersMois": [],
+      "abscenceTotaleSinistres36DerniersMoisConcernantLeBienAAssurer": "Non",
+      "nbSinistresDegatDesEaux": "2",
+      "nbSinistresVolTentativeVol": "0",
+      "nbSinistresEvenementClimatique": "0",
+      "nbSinistresResponsabiliteCivil": "0",
+      "nbAutreSinistres": "0"
+    },
+    "CommissionCourtier": {
+      "valeurReglette": "10",
+      "fraisDeCourtageAnnuel": "30",
+      "valeurRegletteFrais": "50"
+    }
+  }
+}

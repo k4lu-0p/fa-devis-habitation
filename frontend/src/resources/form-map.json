@@ -1,0 +1,77 @@
+{
+  "DevisHabitation": {
+      "Client": {
+        "IDFicheClient": [], // ??????????????
+        "nom": "lastname", // step 1
+        "prenom": "firstname", // step 1
+        "dateDeNaissance": "birthdate", // step 1
+        "sexe": "civility", // step 1
+        "profession": "SALACADRE", // step 1
+        "situationFamiliale": "familySituation", // step 1
+        "AdresseLigne1": "address", // step 1
+        "AdresseLigne2": "additionalAddress", // step 1
+        "codePostal": "city", // step 1 (à splitter)
+        "ville": "city", // step 1 (à splitter)
+        "telephone": [], // step 1
+        "email": "jmtruche@gmail.com" // step 1
+    },
+    "DescriptionBien1": {
+        "AdresseLigne1": "property.addressProperty", // step 1
+        "AdresseLigne2": ["property.additionalPropertyAddress"], // step 1
+        "codePostal": "property.cityProperty", // step 1 (à splitter)
+        "ville": "property.cityProperty", // step 1 (à splitter)
+        "contexteDemande": "property.context", // step 2
+        "qualiteAssure": "property.quality", // step 2
+        "natureDuBien": "property.typeProperty", // step 2
+        "etageSiAppartement": "property.floor", // step 2
+        "anneeConstruction": "property.yearBuilding", // step 2
+        "destinationBien": "property.destinationProperty", // step 2
+        "nombrePiecePrincipal": "numberMainRooms", // step 2 // swp_retourneNbPiecesContenu
+        "surfaceHabitable": "0", // 0 by default
+        "presenceDependance": "NON", // step 2 // En fonction de surface dependance
+        "surfaceDependances": "0", // step 2
+        "capitalMobilierAGarantir": "25000", // step 2  // swp_retourneNbPiecesContenu
+        "dontCapitablObjetValeurAGarantir": "property.objectValuableCapital", // step 2
+        "batimentPrincipal": {
+          "construitEnMateriauxDurs": "additional.mainBuilding.isBuildedWithHeavyMaterials",
+          "couvertEnMaterieuxDurs": "additional.mainBuilding.isCoveredWithHeavyMaterials",
+          "ossatureBoisOuBardeeBois": "additional.mainBuilding.hasWoodenSkeleton"
+        },
+        "dependance": {
+          "construitEnMateriauxDurs": "additional.outbuilding.isOutbuildingBuildedWithHeavyMaterials", // non
+          "couvertEnMaterieuxDurs": "additional.outbuilding.isOutbuildingCoveredWithHeavyMaterials", // non
+          "ossatureBoisOuBardeeBois": "additional.outbuilding.hasOutbuildingWoodenSkeleton" // non
+        },
+        "presencePiscine": "additional.equipments.hasSwimmingPool",
+        "piscineHorsSol": ["additional.equipments.isAbovegroundSwimmingPool"],
+        "piscineCouverte": ["additional.equipments.isCoveredSwimmingPool"],
+        "presenceVeranda": "additional.equipments.hasVeranda",
+        "surfaceVeranda": "additional.equipments.verandaSurface",
+        "presencePanneauxSolairesOuPhotovoltaique": "additional.equipments.hasSolarPannels",
+        "surfaceDesPanneauxSolaires": ["additional.equipments.solarPannelsSurface"],
+        "presencePoeleABoisOuCheFerme": "additional.equipments.hasClosedFireplace",
+        "intallProFacturePoeleABoisOuCheFerme": "hasOpenedFireplace", // ???
+        "presenceChemineeFoyerOuvert": "additional.equipments.hasOpenedFireplace",
+        "intallProFactureChemineeFoyerOuvert": [], // ???
+        "habitationSurTerrainInconstructible": "additional.specifities.isOnUnbuildableLand",
+        "monumentHistorique": "additional.specifities.isHistoricalMonument",
+        "bienUtiliseMemePartiellementPourUsagePRO": "additional.specifities.hasPartiallyProUse",
+        "bienDeTypeChateauOuManoir": "additional.specifities.isCastleType",
+        "bienIsoleAPlusDe200MTouteHabitation": "additional.specifities.isInsulated"
+    },
+    "AntecedentsAssurances": {
+        "resilieParAutreAssureur60DerniersMois": "additional.antecedents.hasAlreadyTerminatedContract",
+        "abscenceTotaleSinistres36DerniersMoisConcernantLeBienAAssurer": "additional.antecedents.hasNoDisaster",
+        "nbSinistresDegatDesEaux": "additional.antecedents.nbDisastersWater",
+        "nbSinistresVolTentativeVol": "additional.antecedents.nbDisastersSteal",
+        "nbSinistresEvenementClimatique": "additional.antecedents.nbDisastersClimatic",
+        "nbSinistresResponsabiliteCivil": "additional.antecedents.nbDisastersCivil",
+        "nbAutreSinistres": "additional.antecedents.nbDisastersOther"
+    },
+    "CommissionCourtier": { // ??
+        "valeurReglette": "0", // non
+        "fraisDeCourtageAnnuel": "0", // non
+        "valeurRegletteFrais": "0" // non
+    }
+  }
+}
