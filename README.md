@@ -1,8 +1,22 @@
-// Plan d'action
-On reçoit un objet JS
-On converti l'objet en XML
-On encode en base64 la chaîne XML
+# Instructions
 
-// Valeurs dynamique
-Nombre de pièces : 
-Capital mobilier à garantir :
+### Mode dev
+```bash
+make dev-backend
+make dev-frontend
+```
+
+### Build de l'app (front et back)
+```bash
+make build-app
+```
+
+### Builder l'image docker
+```bash
+make docker-image
+```
+
+### Lancer le conteneur
+```bash
+make docker-conteneur
+```

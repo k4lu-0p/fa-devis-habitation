@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prod": "node server.js",
     "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
     "start:watch": "NODE_ENV=development nodemon",
     "build": "cross-env NODE_ENV=production make build"
