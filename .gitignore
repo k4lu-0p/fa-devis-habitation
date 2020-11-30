@@ -1,5 +1,6 @@
 node_modules
 .env
+dist
 
 # ignore dist front
 src/public/**/*.png

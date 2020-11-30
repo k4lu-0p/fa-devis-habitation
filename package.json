@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prod": "node server.js",
     "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
-    "start:watch": "nodemon",
-    "build": "tsc"
+    "start:watch": "NODE_ENV=development nodemon",
+    "build": "cross-env NODE_ENV=production make build"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.8",
+    "cross-env": "^7.0.2",
     "nodemon": "^2.0.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
