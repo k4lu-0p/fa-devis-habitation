@@ -27,7 +27,7 @@ docker-container:
 	--detach \
 	--volume $(PWD)/dist/:/usr/src/app \
 	--volume $(PWD)/node_modules:/usr/src/app/node_modules \
-	--publish $(APP_PORT):3000 \
+	--publish $(I2FC_APP_PORT):$(APP_PORT) \
 	--name $(I2FC_APP_NAME) \
 	$(I2FC_IMG_NAME)
 
