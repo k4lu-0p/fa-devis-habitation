@@ -17,19 +17,24 @@ dev-frontend:
 dev-backend:
 	npm run start:watch
 
-docker-image:
+build:
 	docker image build \
+	--no-cache \
 	--file $(PWD)/Dockerfile \
 	--tag $(I2FC_IMG_NAME) .
 
-docker-container:
+run:
 	docker run \
+	--rm \
 	--detach \
-	--volume $(PWD)/dist/:/usr/src/app \
-	--volume $(PWD)/node_modules:/usr/src/app/node_modules \
 	--publish $(I2FC_APP_PORT):$(APP_PORT) \
 	--name $(I2FC_APP_NAME) \
 	$(I2FC_IMG_NAME)
 
-docker-exec:
-	docker exec -it $(I2FC_APP_NAME) /bin/bash
+exec:
+	docker run \
+	--rm \
+	-it \
+	--publish $(I2FC_APP_PORT):$(APP_PORT) \
+	$(I2FC_IMG_NAME) \
+	sh

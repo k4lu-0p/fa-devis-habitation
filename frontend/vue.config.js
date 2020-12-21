@@ -3,6 +3,6 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  outputDir: '../src/public/',
+  outputDir: 'dist',
   filenameHashing: false,
 }
