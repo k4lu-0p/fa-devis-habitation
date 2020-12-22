@@ -26,7 +26,7 @@ build:
 run:
 	docker run \
 	--rm \
-	--detach \
+	--volume $(PWD)/.env:/app/.env \
 	--publish $(I2FC_APP_PORT):$(APP_PORT) \
 	--name $(I2FC_APP_NAME) \
 	$(I2FC_IMG_NAME)
@@ -35,6 +35,7 @@ exec:
 	docker run \
 	--rm \
 	-it \
+	--volume $(PWD)/.env:/app/.env \
 	--publish $(I2FC_APP_PORT):$(APP_PORT) \
 	$(I2FC_IMG_NAME) \
 	sh
