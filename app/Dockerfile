@@ -1,13 +1,3 @@
-FROM node:12 AS builder
-
-WORKDIR /app
-
-COPY ./frontend ./
-COPY ./frontend/package*.json ./
-
-RUN npm install
-RUN npm run build
-
 FROM alpine:latest
 
 RUN apk add --update nodejs nodejs-npm
@@ -22,7 +12,7 @@ COPY . .
 
 RUN tsc
 
-COPY --from=builder /app/dist ./dist/public
+COPY --from=registry.lucasrobin.fr/i2fc-fa-devis-habitation-static /app/dist ./dist/public
 
 CMD ["node", "./dist/server.js"]
 

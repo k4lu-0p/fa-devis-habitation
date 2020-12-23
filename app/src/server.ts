@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 // v1 api routes
 app.use('/api/v1', routes);
 
-app.listen(process.env.APP_PORT, () => {
+app.listen(3000, () => {
     console.log(`Devis habitation : http://localhost:3000`);
 });
 
