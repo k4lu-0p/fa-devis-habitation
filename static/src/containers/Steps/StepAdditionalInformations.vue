@@ -261,7 +261,10 @@ export default {
         handleExpiredTokenCaptcha() { this.tokenCaptcha = ''; },
         getTooltip(code) {
             let tooltipObject = this.$store.getters['getTooltip'](code);
-            return atob(tooltipObject['sCorpsTexteHTMLBase64']);
+            if (tooltipObject && tooltipObject['sCorpsTexteHTMLBase64']) {
+                return atob(tooltipObject['sCorpsTexteHTMLBase64']);
+            }
+            return 'Aucun information disponible';
         }
 
     },

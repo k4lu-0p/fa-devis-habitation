@@ -127,12 +127,12 @@
             v-row(v-if="numberMainRooms")
                 v-col.pb-1.pt-2(cols="5")
                     div.d-flex.flex-row.align-center(style="height: 100%;")
-                        v-tooltip(right)
+                        v-tooltip(right max-width="300")
                             template(v-slot:activator="{ on, attrs }")
                                 div.d-flex(v-bind="attrs" v-on="on")
                                     span.mb-0.font-weight-medium {{ $const.fields.property.areaOutbuildings.label }}
                                     v-icon.pl-2 mdi-help-circle
-                            span Information complémentaire pour le champ
+                            span(v-html="getTooltip($const.fields.property.areaOutbuildings.tooltipCode)")
                 v-col.py-1(cols="7")
                     input-number(
                         v-model.lazy="areaOutbuildings"
@@ -340,7 +340,10 @@ export default {
         previous() { this.$emit('previous') },
         getTooltip(code) {
             let tooltipObject = this.$store.getters['getTooltip'](code);
-            return atob(tooltipObject['sCorpsTexteHTMLBase64']);
+            if (tooltipObject && tooltipObject['sCorpsTexteHTMLBase64']) {
+                return atob(tooltipObject['sCorpsTexteHTMLBase64']);
+            }
+            return 'Aucun information disponible';
         }
     },
 }
