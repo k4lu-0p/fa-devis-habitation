@@ -84,12 +84,12 @@
             v-row
                 v-col.pb-1.pt-2(cols="5")
                     div.d-flex.flex-row.align-center(style="height: 100%;")
-                        v-tooltip(right)
+                        v-tooltip(right max-width="300")
                             template(v-slot:activator="{ on, attrs }")
                                 div.d-flex(v-bind="attrs" v-on="on")
                                     span.mb-0.font-weight-medium {{ $const.fields.property.destinationProperty.label }}
                                     v-icon.pl-2 mdi-help-circle
-                            span Information complémentaire pour le champ
+                            span(v-html="getTooltip($const.fields.property.destinationProperty.tooltipCode)")
                 v-col.py-1(cols="7")
                     input-radio-list(
                         v-model.lazy="destinationProperty"
@@ -105,12 +105,13 @@
             v-row
                 v-col.pb-1.pt-2(cols="5")
                     div.d-flex.flex-row.align-center(style="height: 100%;")
-                        v-tooltip(right)
+                        v-tooltip(right max-width="300")
                             template(v-slot:activator="{ on, attrs }")
                                 div.d-flex(v-bind="attrs" v-on="on")
                                     span.mb-0.font-weight-medium {{ $const.fields.property.numberMainRooms.label }}
                                     v-icon.pl-2 mdi-help-circle
-                            span Information complémentaire pour le champ
+                            span(v-html="getTooltip($const.fields.property.numberMainRooms.tooltipCode)")
+
                 v-col.py-1(cols="7")
                     input-select(
                         v-model.lazy="numberMainRooms"
@@ -332,11 +333,15 @@ export default {
 
                 this.$store.commit('UPDATE_STEP_DATA', { stepName: 'property', stepData, });
             }
-        }
+        },
     },
     methods: {
         next() { this.$emit('next') },
         previous() { this.$emit('previous') },
+        getTooltip(code) {
+            let tooltipObject = this.$store.getters['getTooltip'](code);
+            return atob(tooltipObject['sCorpsTexteHTMLBase64']);
+        }
     },
 }
 </script>

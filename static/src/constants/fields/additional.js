@@ -16,7 +16,7 @@ export default {
                         value: 'NON',
                     },
                 ],
-                tooltip: 'Détail sur la question',
+                tooltipCode: 'HA_MATERIAUX_DURS',
                 unauthorizedResponse: 'NON',
             },
             isCoveredWithHeavyMaterials: {
@@ -33,7 +33,7 @@ export default {
                         value: 'NON',
                     },
                 ],
-                tooltip: 'Détail sur la question',
+                tooltipCode: 'HA_MATERIAUX_DURS',
                 unauthorizedResponse: 'NON',
             },
             hasWoodenSkeleton: {

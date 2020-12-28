@@ -21,15 +21,18 @@
                             v-col.pb-1.pt-2(:cols="$vuetify.breakpoint.xs ? 12 : 9")
                                 //- Si tooltip
                                 div.d-flex.flex-row.align-center(
-                                    v-if="question.tooltip && question.tooltip.length > 0"
+                                    v-if="question.tooltipCode && question.tooltipCode.length > 0"
                                     style="height: 100%;"
                                 )
-                                    v-tooltip(right)
+                                    v-tooltip(
+                                        right
+                                        max-width="300"
+                                    )
                                         template(v-slot:activator="{ on, attrs }")
                                             div.d-flex(v-bind="attrs" v-on="on")
                                                 span.mb-0.font-weight-medium {{ question.label }}
                                                 v-icon.pl-2 mdi-help-circle
-                                        span {{ question.tooltip }}
+                                        span(v-html="getTooltip(question.tooltipCode)")
 
                                 //- Sinon
                                 div.d-flex.flex-row.align-center(
@@ -255,7 +258,12 @@ export default {
         next() { this.$emit('next') },
         previous() { this.$emit('previous') },
         handleVerifyTokenCaptcha(token) { this.tokenCaptcha = token; },
-        handleExpiredTokenCaptcha() { this.tokenCaptcha = ''; }
+        handleExpiredTokenCaptcha() { this.tokenCaptcha = ''; },
+        getTooltip(code) {
+            let tooltipObject = this.$store.getters['getTooltip'](code);
+            return atob(tooltipObject['sCorpsTexteHTMLBase64']);
+        }
+
     },
     computed: {
         ...mapStepFieldsToStore([

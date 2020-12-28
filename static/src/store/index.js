@@ -10,7 +10,7 @@ export default new Vuex.Store({
 		status: 'new_form',
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 1,
+		currentStepNumber: 2,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
@@ -88,6 +88,7 @@ export default new Vuex.Store({
 			antecedents: true,
 		},
 		fieldsProvidedByAPI: [],
+		tooltipsProvidedByAPI: [],
 		formResult: null,
 		formulaNameSelected: '',
 		blobImg: null,
@@ -117,6 +118,9 @@ export default new Vuex.Store({
 		},
 		UPDATE_FIELDS_PROVIDED_BY_API(state, fieldsProvidedByAPI) {
 			state.fieldsProvidedByAPI = fieldsProvidedByAPI;
+		},
+		UPDATE_TOOLTIPS_PROVIDED_BY_API(state, tooltipsProvidedByAPI) {
+			state.tooltipsProvidedByAPI = tooltipsProvidedByAPI;
 		},
 		UPDATE_FORM_RESULT(state, formResult) {
 			state.formResult = formResult;
@@ -175,6 +179,8 @@ export default new Vuex.Store({
 		getBlobImg: (state) => state.blobImg,
 		getCommercialCode: (state) => state.stepsData.commercialCode,
 		getTokenCaptcha: (state) => state.tokenCaptcha,
+		getTooltips: (state) => state.tooltipsProvidedByAPI,
+		getTooltip: (state) => (code) => state.tooltipsProvidedByAPI.find(tooltip => tooltip['sCodeBulle'] === code),
 	},
 	actions: {
 		async fetchFieldsProvidedByAPI({ commit }) {
@@ -189,6 +195,24 @@ export default new Vuex.Store({
 			try {
 				const { data: fieldsProvidedByAPI } = await axios.get(url);
 				commit('UPDATE_FIELDS_PROVIDED_BY_API', fieldsProvidedByAPI);
+			} catch (error) {
+				console.error(error);
+			}
+
+			commit('UPDATE_LOADING', false);
+		},
+		async fetchTooltipsProvidedByAPI({ commit }) {
+			let baseURL = '';
+			if (process.env.NODE_ENV === 'development') {
+				baseURL = 'http://localhost:3333';
+			}
+			let url = `${baseURL}${process.env.VUE_APP_MEDIALOG_ROUTE_SWP_RETOURNE_LISTE_BULLE_AIDE}`;
+
+			commit('UPDATE_LOADING', true);
+
+			try {
+				const { data: tooltipsProvidedByAPI } = await axios.get(url);
+				commit('UPDATE_TOOLTIPS_PROVIDED_BY_API', tooltipsProvidedByAPI);
 			} catch (error) {
 				console.error(error);
 			}

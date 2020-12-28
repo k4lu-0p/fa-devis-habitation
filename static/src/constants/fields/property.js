@@ -137,6 +137,7 @@ export default {
                 value: 'RESIDENCE_SECONDAIRE',
             },
         ],
+        tooltipCode: 'HA_DESTINATION_BIEN',
     },
     numberMainRooms: { //--FOURNI PAR API
         type: 'select',
@@ -148,6 +149,7 @@ export default {
         rules: {
             required: 'Veuillez selectionner le nombre de pièces principales',
         },
+        tooltipCode: 'HA_DEFINITION_PIECES_PRINCIPALES',
     },
     areaOutbuildings: { //--OK
         type: 'number',
@@ -157,6 +159,7 @@ export default {
             required: 'Veuillez renseigner la surface réelle des dépendances',
             numeric: 'Nombre incorrect',
         },
+        tooltipCode: 'HA_DEFINITION_DEPENDANCE',
     },
     movableCapitalToBeGuaranteed: { //--FOURNI PAR API
         type: 'select',
