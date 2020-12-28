@@ -114,8 +114,27 @@ const swp_retourneTarifPdf = catchAsync(async (req, res) => {
 
 })
 
+const swp_retourneListebulleAide = catchAsync(async (req, res) => {
+    const {
+        data: result
+    } = await MedialogService.swp_retourneListebulleAide();
+    let response;
+
+    xml2js.parseString(result, function (err, result) {
+        if (err) throw err;
+        let body = result['SOAP-ENV:Envelope']['SOAP-ENV:Body'];
+
+        if (body.length === 0 || !body.length) {
+            return res.status(500).send('Il semble y avoir un problème pour récupérer les champs dynamiques...');
+        }
+        response = body[0]['ns1:apc_retourneListebulleAideResult'][0]['bulle'];
+    });
+    res.status(200).json(response);
+})
+
 export default {
     swp_retourneNbPiecesContenu,
     swp_retourneTarif,
     swp_retourneTarifPdf,
+    swp_retourneListebulleAide,
 }

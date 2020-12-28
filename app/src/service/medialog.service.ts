@@ -43,7 +43,27 @@ export async function swp_retourneTarif(params) {
     }
 }
 
+export async function swp_retourneListebulleAide() {
+  const url = process.env.SOAP_URL;
+  const headers = generateSoapHeader('apc_retourneListebulleAide');
+  const body = `
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+        <soapenv:Header/>
+        <soapenv:Body>
+          <sKeyId>${process.env.SOAP_KEY_ID}</sKeyId>
+        </soapenv:Body>
+    </soapenv:Envelope>`;
+
+  try {
+    const response = await axios.post(url, body, { headers });
+    return response;
+  } catch (error) {
+    if (error) throw error;
+  }
+}
+
 export default {
   swp_retourneNbPiecesContenu,
   swp_retourneTarif,
+  swp_retourneListebulleAide,
 }
