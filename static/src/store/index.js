@@ -10,7 +10,7 @@ export default new Vuex.Store({
 		status: 'new_form',
 		maxStepNumber: 4,
 		minStepNumber: 1,
-		currentStepNumber: 2,
+		currentStepNumber: 1,
 		currentStepName: '',
 		stepsData: {
 			subscriber: {
