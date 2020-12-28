@@ -20,6 +20,8 @@ exec:
 	docker run \
 	--rm \
 	-it \
+	--volume $(PWD):/usr/src/app \
+	--volume $(PWD)/node_modules:/usr/src/app/node_modules \
 	--publish $(APP_PORT):3000 \
 	$(IMG_NAME) \
 	sh
