@@ -83,7 +83,7 @@
                                             row
                                         )
         //- Google Captcha
-        v-row
+        v-row(v-if="$store.getters['getCurrentStepNumber'] === 3")
             v-col.d-flex.justify-center.py-10(cols="12")
                 captcha(
                     @verify="handleVerifyTokenCaptcha($event)"
