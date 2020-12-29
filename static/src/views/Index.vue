@@ -29,7 +29,7 @@ export default {
         middlewareSteps(currentStep) {
             // soumission du formulaire arrivé à l'étape 4
             if (currentStep === 4) {
-                this.$store.dispatch('fetchFormulasWithStepsData');
+                this.$store.dispatch('fetchFormulasWithStepsData', false);
             }
         }
     }

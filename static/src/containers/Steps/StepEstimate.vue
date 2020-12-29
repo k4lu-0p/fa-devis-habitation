@@ -294,7 +294,7 @@ export default {
         },
         handleChangeCommercialCode(event) {
             if (event) {
-                this.$store.dispatch('fetchFormulasWithStepsData')
+                this.$store.dispatch('fetchFormulasWithStepsData', true);
             }
         }
     },

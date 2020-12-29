@@ -35,10 +35,12 @@ const swp_retourneNbPiecesContenu = catchAsync(async (req, res) => {
 });
 
 const swp_retourneTarif = catchAsync(async (req, res) => {
-    const isGoogleCaptchaVerified = await RecaptchaService.verify(req.body.tokenCaptcha)
-    
-    if (!isGoogleCaptchaVerified) {
-        return res.status(400).send('Invalid captcha');
+
+    if (!req.body.bypassCaptcha) {
+        const isGoogleCaptchaVerified = await RecaptchaService.verify(req.body.tokenCaptcha)        
+        if (!isGoogleCaptchaVerified) {
+            return res.status(400).send('Invalid captcha');
+        }        
     }
 
     const formData = AdapterService.reorganizeFormData(req.body.formData);

@@ -219,7 +219,7 @@ export default new Vuex.Store({
 
 			commit('UPDATE_LOADING', false);
 		},
-		async fetchFormulasWithStepsData({ commit, state }) {
+		async fetchFormulasWithStepsData({ commit, state }, bypassCaptcha) {
 			let baseURL = '';
 			if (process.env.NODE_ENV === 'development') {
 				baseURL = 'http://localhost:3333';
@@ -230,6 +230,7 @@ export default new Vuex.Store({
 			const body = {
 				formData: state.stepsData,
 				tokenCaptcha: state.tokenCaptcha,
+				bypassCaptcha,
 			};
 			
 			commit('UPDATE_LOADING', true);
