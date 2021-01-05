@@ -21,12 +21,4 @@ dev:
 	$(IMG_NAME)
 
 exec:
-	docker run \
-	-it \
-	--rm \
-	--volume $(PWD):/app \
-	--volume $(PWD)/node_modules:/app/node_modules \
-	--publish $(APP_PORT):8080 \
-	--name $(APP_NAME) \
-	$(IMG_NAME) \
-	sh
+	docker exec -it $(APP_NAME) sh
