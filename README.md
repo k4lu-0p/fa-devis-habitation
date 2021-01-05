@@ -12,8 +12,7 @@ App:
 
 - Aller dans le dossier app
 - Si l'image docker n'est pas présente sur votre machine : make build
-- Lancer le container à l'aide de la commande : make dev
-- Lancer la commande make exec permettant d'être dans le container précédemment lancé en mode interactif
+- Lancer le container en mode interractif à l'aide de la commande : make exec
 - Une fois dedans, taper la commande : npm run dev
 - Vous pouvez commencer à travailler de le dossier app
 
@@ -21,7 +20,6 @@ Static:
 
 - Aller dans le dossier static
 - Si l'image docker n'est pas présente sur votre machine : make build
-- Lancer le container à l'aide de la commande : make dev
-- Lancer la commande make exec permettant d'être dans le container précédemment lancé en mode interactif
+- Lancer le container en mode interractif à l'aide de la commande : make exec
 - Une fois dedans, taper la commande : npm run dev
 - Vous pouvez commencer à travailler de le dossier static

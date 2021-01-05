@@ -9,7 +9,7 @@ build:
 	--tag $(IMG_NAME) \
 	.
 
-dev:
+run:
 	docker run \
 	--rm \
 	--publish $(APP_PORT):3000 \
@@ -17,5 +17,11 @@ dev:
 	$(IMG_NAME)
 
 exec:
-	docker exec -it $(APP_NAME) sh
+	docker run \
+	-it \
+	--rm \
+	--publish $(APP_PORT):3000 \
+	--name $(APP_NAME) \
+	$(IMG_NAME) \
+	sh
 

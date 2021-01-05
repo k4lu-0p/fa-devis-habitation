@@ -11,7 +11,7 @@ build:
 	--tag $(IMG_NAME) \
 	.
 
-dev:
+run:
 	docker run \
 	--rm \
 	--volume $(PWD):/app \
@@ -21,4 +21,12 @@ dev:
 	$(IMG_NAME)
 
 exec:
-	docker exec -it $(APP_NAME) sh
+	docker run \
+	-it \
+	--rm \
+	--volume $(PWD):/app \
+	--volume $(PWD)/node_modules:/app/node_modules \
+	--publish $(APP_PORT):8080 \
+	--name $(APP_NAME) \
+	$(IMG_NAME) \
+	sh

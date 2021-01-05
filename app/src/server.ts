@@ -16,11 +16,12 @@ const app = express();
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
+// Bypass problem certificat
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 if (process.env.NODE_ENV !== 'production') {
     // Bypass cross origin call
     app.use(cors())
-    // Bypass problem certificat
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
 // Frontend: declare static assets
