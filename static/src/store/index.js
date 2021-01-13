@@ -93,8 +93,12 @@ export default new Vuex.Store({
 		formulaNameSelected: '',
 		blobImg: null,
 		tokenCaptcha: '',
+		isConfirmScreenVisible: false,
 	},
 	mutations: {
+		UPDATE_VISIBILITY_CONFIRM_SCREEN(state, bool) {
+			state.isConfirmScreenVisible = bool;
+		},
 		UPDATE_LOADING(state, isLoading) {
 			state.loading = isLoading;
 		},
@@ -139,6 +143,7 @@ export default new Vuex.Store({
 		}
 	},
 	getters: {
+		getConfirmScreenVisible: (state) => state.isConfirmScreenVisible,
 		getLoading: (state) => state.loading,
 		getStep: (state) => (step) => state.stepsData[step],
 		getMaxStepNumber: state => state.maxStepNumber,
@@ -238,6 +243,10 @@ export default new Vuex.Store({
 			try {
 				const { data: tableauTarification } = await axios.post(url, body);
 				commit('UPDATE_FORM_RESULT', tableauTarification);
+				// si le client est déjà rattaché à un courtier, on affiche pas les prix et on passe directement à l'écran final
+				if (tableauTarification['nTypeClientDetecte'] != 1) {
+					commit('UPDATE_VISIBILITY_CONFIRM_SCREEN', true);
+				}
 			} catch(error) {
 				console.error(error);
 			}

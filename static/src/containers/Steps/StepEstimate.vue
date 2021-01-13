@@ -13,10 +13,8 @@
         //-     v-icon(left) mdi-arrow-left
         //-     span Précédent
 
-        template(
-            v-if="formResult && !isConfirmScreenVisible && !blobImg"
-        )
-            v-card-text.py-0(v-if="Number(formResult.codeInfo) === 0")
+        template(v-if="formResult && !isConfirmScreenVisible && !blobImg")
+            v-card-text.py-0(v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) === 1")
                 v-row
                     v-col.py-1(cols="12")
                         h2 Votre simulation
@@ -51,7 +49,7 @@
 
             //- Mes formules
             template(
-                v-if="Number(formResult.codeInfo) === 0"
+                v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) === 1"
             )
                 v-row.px-1.py-10
                     template(v-for="formule in mesFormules")
@@ -87,7 +85,7 @@
                         small.px-2 {{ formResult.sRenvoiTableauComparatif }}
 
             //- Aucune formule disponible
-            template(v-if="loading === false && Number(formResult.codeInfo) > 0")
+            template(v-if="loading === false && Number(formResult.codeInfo) > 0 && Number(formResult.nTypeClientDetecte) === 1")
                 v-row   
                     v-col.d-flex.justify-center.py-10(cols="12")
                         div
@@ -120,7 +118,7 @@
                     span Recevoir le devis
         
         //- Écran final de confirmation
-        template(v-if="!loading && isConfirmScreenVisible")
+        template(v-if="formResult && !loading && isConfirmScreenVisible")
             type-client-block-message(:nTypeClientDetecte="formResult.nTypeClientDetecte")
                 v-card-text.text-center.info--text(v-html="formResult.sCoordonneesCourtier")
             v-card-actions
@@ -132,6 +130,7 @@
                 )
                     span Annuler
                 v-btn(
+                    v-if="Number(formResult.nTypeClientDetecte) === 1"
                     color="secondary"
                     depressed
                     @click="fetchEstimate()"
@@ -218,7 +217,7 @@ export default {
             selectedFormula: null,
             detailedFormula: null,
             isModalVisible: false,
-            isConfirmScreenVisible: false,
+            // isConfirmScreenVisible: false,
         }
     },
     validations: {
@@ -234,6 +233,10 @@ export default {
         commercialCode: {
             get() { return this.$store.getters['getCommercialCode']},
             set(value) { this.$store.commit('UPDATE_COMMERCIAL_CODE', value) }
+        },
+        isConfirmScreenVisible: {
+            get() { return this.$store.getters['getConfirmScreenVisible']},
+            set(value) { this.$store.commit('UPDATE_VISIBILITY_CONFIRM_SCREEN', value)}
         },
         mesFormules () {
             if (this.formResult && this.formResult.mesFormules) {
