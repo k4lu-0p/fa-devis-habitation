@@ -15,7 +15,7 @@
 
         template(v-if="formResult && !isConfirmScreenVisible && !blobImg")
             v-card-text.py-0(v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) === 1")
-                v-row
+                v-row.ma-0
                     v-col.py-1(cols="12")
                         h2 Votre simulation
 
