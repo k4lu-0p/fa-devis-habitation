@@ -109,6 +109,9 @@ export default new Vuex.Store({
 			}
 		},
 		UPDATE_CURRENT_STEP_NUMBER(state, currentStepNumber) {
+			if (currentStepNumber === 3) {
+				state.tokenCaptcha = '';
+			}
 			state.currentStepNumber = currentStepNumber;
 		},
 		UPDATE_CURRENT_STEP_NAME(state, currentStepName) {
