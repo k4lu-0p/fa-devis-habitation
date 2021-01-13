@@ -14,7 +14,7 @@
         //-     span Précédent
 
         template(v-if="formResult && !isConfirmScreenVisible && !blobImg")
-            v-card-text.py-0(v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) === 1")
+            v-card-text.py-0(v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) !== 3")
                 v-row.ma-0
                     v-col.py-1(cols="12")
                         h2 Votre simulation
@@ -49,7 +49,7 @@
 
             //- Mes formules
             template(
-                v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) === 1"
+                v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) !== 3"
             )
                 v-row.px-1.py-10
                     template(v-for="formule in mesFormules")
@@ -85,7 +85,7 @@
                         small.px-2 {{ formResult.sRenvoiTableauComparatif }}
 
             //- Aucune formule disponible
-            template(v-if="loading === false && Number(formResult.codeInfo) > 0 && Number(formResult.nTypeClientDetecte) === 1")
+            template(v-if="loading === false && Number(formResult.codeInfo) > 0 && Number(formResult.nTypeClientDetecte) !== 3")
                 v-row   
                     v-col.d-flex.justify-center.py-10(cols="12")
                         div
@@ -130,7 +130,7 @@
                 )
                     span Annuler
                 v-btn(
-                    v-if="Number(formResult.nTypeClientDetecte) === 1"
+                    v-if="Number(formResult.nTypeClientDetecte) !== 3"
                     color="secondary"
                     depressed
                     @click="fetchEstimate()"

@@ -247,7 +247,7 @@ export default new Vuex.Store({
 				const { data: tableauTarification } = await axios.post(url, body);
 				commit('UPDATE_FORM_RESULT', tableauTarification);
 				// si le client est déjà rattaché à un courtier, on affiche pas les prix et on passe directement à l'écran final
-				if (tableauTarification['nTypeClientDetecte'] != 1) {
+				if (tableauTarification['nTypeClientDetecte'] === 3) {
 					commit('UPDATE_VISIBILITY_CONFIRM_SCREEN', true);
 				}
 			} catch(error) {
