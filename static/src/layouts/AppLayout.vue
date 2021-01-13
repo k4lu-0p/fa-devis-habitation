@@ -12,10 +12,9 @@
                 span Retour accueil
                 v-icon mdi-arrow-left
         v-main
-            v-container
-                v-row
-                    v-col.pa-0(cols="4" offset="4")
-                        v-img(src="../assets/images/logo.png" max-height="100px" contain)
+            v-row.py-6
+                v-col.pa-0(cols="4" offset="4")
+                    v-img(src="../assets/images/logo.png" max-height="100px" contain)
             v-divider(color="primary").mb-3.header-divider
             
             v-container
