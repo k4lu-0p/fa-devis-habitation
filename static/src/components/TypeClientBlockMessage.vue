@@ -1,7 +1,5 @@
 <template lang="pug">
 	div
-		v-toolbar(dense color="transparent" flat)
-			v-toolbar-title Vos coordonnées
 		v-spacer
 		v-toolbar(dense color="transparent" flat)
 			v-toolbar-title Votre interlocuteur

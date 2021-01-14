@@ -115,10 +115,39 @@
                     @click="isConfirmScreenVisible = true"
                     :disabled="!selectedFormula"
                 )
-                    span Recevoir le devis
+                    span Recevoir le devis 
         
         //- Écran final de confirmation
         template(v-if="formResult && !loading && isConfirmScreenVisible")
+            v-toolbar(dense color="transparent" flat v-if="formResult && formResult.nTypeClientDetecte === 1")
+                v-toolbar-title Vos coordonnées
+
+            //- Email
+            v-row(v-if="formResult && formResult.nTypeClientDetecte === 1")
+                v-col.py-1(cols="12")
+                    input-text(
+                        v-model.lazy="email"
+                        required
+                        :error-messages="emailErrors"
+                        @input="$v.email.$touch()"
+                        @blur="$v.email.$touch()"
+                        :label="$const.fields.subscriber.email.label"
+                        :prepend-icon="$const.fields.subscriber.email.icon"
+                    )
+            
+            //- Téléphone
+            v-row(v-if="formResult && formResult.nTypeClientDetecte === 1")
+                v-col.py-1(cols="12")
+                    input-text(
+                        v-model.lazy="phone"
+                        required
+                        :error-messages="phoneErrors"
+                        @input="$v.phone.$touch()"
+                        @blur="$v.phone.$touch()"
+                        :label="$const.fields.subscriber.phone.label"
+                        :prepend-icon="$const.fields.subscriber.phone.icon"
+                    )
+
             type-client-block-message(:nTypeClientDetecte="formResult.nTypeClientDetecte")
                 v-card-text.text-center.info--text(v-html="formResult.sCoordonneesCourtier")
             v-card-actions
@@ -133,6 +162,7 @@
                     v-if="Number(formResult.nTypeClientDetecte) !== 3"
                     color="secondary"
                     depressed
+                    :disabled="$v.$invalid"
                     @click="fetchEstimate()"
                 )
                     span Recevoir le devis
@@ -203,12 +233,14 @@ import { mapGetters } from 'vuex';
 import mapStepFieldsToStore from '../../utils/mapStepFieldsToStore';
 import { validationMixin } from 'vuelidate';
 import errorsMixin from '../../mixins/validator/errors'; // Mixins contenant les messages d'erreurs (computed) pour Vuelidate 
-import { required } from 'vuelidate/lib/validators'; // Mixins des régles à appliquer sur les champs (methods) pour Vuelidate
+import { required, email, helpers } from 'vuelidate/lib/validators'; // Mixins des régles à appliquer sur les champs (methods) pour Vuelidate
 import TypeClientBlockMessage from '../../components/TypeClientBlockMessage';
+
+const phoneFrenchRegex = helpers.regex('phoneFrenchRegex', /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/);
 
 export default {
     name: 'EstimateStep',
-    mixins: [ errorsMixin ],
+    mixins: [ errorsMixin, validationMixin ],
     components: {
         TypeClientBlockMessage,
     },
@@ -217,14 +249,26 @@ export default {
             selectedFormula: null,
             detailedFormula: null,
             isModalVisible: false,
-            // isConfirmScreenVisible: false,
         }
     },
-    validations: {
-        commercialCode: { required },
-        desiredGuarantee: { required },
+    validations() {
+        
+        let rules = {};
+
+        if (this.formResult && this.formResult.nTypeClientDetecte === 1) {
+            rules = {
+                email: { email, required },
+                phone: { required, phoneFrenchRegex },
+            }
+        }
+
+        return rules;
     },
     computed: {
+        ...mapStepFieldsToStore([
+            'email',
+            'phone',
+        ], 'subscriber'),
         ...mapGetters({
             formResult: 'getFormResult',
             loading: 'getLoading',

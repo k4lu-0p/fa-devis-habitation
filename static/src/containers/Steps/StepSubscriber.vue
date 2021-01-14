@@ -90,31 +90,7 @@
                         active-picker="YEAR"
                     )
 
-            //- Email
-            v-row
-                v-col.py-1(cols="12")
-                    input-text(
-                        v-model.lazy="email"
-                        required
-                        :error-messages="emailErrors"
-                        @input="$v.email.$touch()"
-                        @blur="$v.email.$touch()"
-                        :label="$const.fields.subscriber.email.label"
-                        :prepend-icon="$const.fields.subscriber.email.icon"
-                    )
-            
-            //- Téléphone
-            v-row
-                v-col.py-1(cols="12")
-                    input-text(
-                        v-model.lazy="phone"
-                        required
-                        :error-messages="phoneErrors"
-                        @input="$v.phone.$touch()"
-                        @blur="$v.phone.$touch()"
-                        :label="$const.fields.subscriber.phone.label"
-                        :prepend-icon="$const.fields.subscriber.phone.icon"
-                    )
+
             
             //- Adresse
             v-row
@@ -224,8 +200,6 @@ import rulesMixin  from '../../mixins/validator/rules';
 import errorsMixin from '../../mixins/validator/errors'; // Mixins contenant les messages d'erreurs (computed) pour Vuelidate 
 import { required, email, helpers } from 'vuelidate/lib/validators'; // Mixins des régles à appliquer sur les champs (methods) pour Vuelidate
 
-// Todo : move this
-const phoneFrenchRegex = helpers.regex('phoneFrenchRegex', /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/)
 
 export default {
     name: 'SubscriberStep',
@@ -257,8 +231,6 @@ export default {
             'birthDate',
             'hasPropertySameAddress',
             'job',
-            'email',
-            'phone',
         ], 'subscriber'),
         ...mapStepFieldsToStore([
             'addressProperty',
@@ -272,8 +244,6 @@ export default {
             lastname: { required },
             civility: { required },
             job: { required },
-            email: { email, required },
-            phone: { required, phoneFrenchRegex },
             familySituation: { required },
             address: { required },
             city: { required },
