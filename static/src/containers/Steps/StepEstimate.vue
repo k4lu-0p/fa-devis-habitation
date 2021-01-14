@@ -16,7 +16,7 @@
         template(v-if="formResult && !isConfirmScreenVisible && !blobImg")
             v-card-text.py-0(v-if="Number(formResult.codeInfo) === 0 && Number(formResult.nTypeClientDetecte) !== 3")
                 v-row.ma-0
-                    v-col.py-1(cols="12")
+                    v-col.py-1.pl-0(cols="12")
                         h2 Votre simulation
 
                 //- Code commercial
@@ -203,15 +203,18 @@
                             tr(v-for="tc in tableauComparatif")
                                 template(v-if="tc.libelle && tc.nomFormule === detailedFormula.nomFormule")
                                     td.font-weight-medium {{ tc.libelle }}
-                                    td
-                                    //- td(width="50px") coucou
-                                        //- <i class="fa fa-question-circle text-primary"
-                                        //-     data-toggle="tooltip"
-                                        //-     data-placement="right"
-                                        //-     :title="tc.sDescriptifDetaille"
-                                        //-     v-if="tc.sDescriptifDetaille"
-                                        //- ></i>&nbsp
+                                    td(width="50px") 
+                                        v-tooltip(
+                                            top
+                                            max-width="300"
+                                            v-if="tc.sDescriptifDetaille"
+                                        )
+                                            template(v-slot:activator="{ on, attrs }")
+                                                div.d-flex(v-bind="attrs" v-on="on")
+                                                    v-icon.pl-2 mdi-help-circle
+                                            span(v-html="tc.sDescriptifDetaille")
 
+                                    
                                     template(v-if="tc.bOptionsFacultatives === 'true'")
                                         td(colspan="2")
                                             div.modal-final-content.text-center.secondary--text.font-weight-bold Option : {{ parseInt(tc.bMontantOptionFacultative).toFixed(2) }}€ /an
