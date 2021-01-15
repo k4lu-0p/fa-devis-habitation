@@ -21,7 +21,7 @@ const swp_retourneNbPiecesContenu = catchAsync(async (req, res) => {
             return res.status(500).send('Il semble y avoir un problème pour récupérer les champs dynamiques...');
         }
 
-        response = body[0]['ns1:apc_retourneNbPiecesContenuResult'][0]['tabMesPieces'];
+        response = body[0]['ns1:swp_retourneNbPiecesContenuResult'][0]['tabMesPieces'];
         response = response.map(r => {
             let items = r['sListeContenuAutoriseSepareeParDesPVirgule'][0].split(';');
             return {
@@ -120,8 +120,8 @@ const swp_retourneListebulleAide = catchAsync(async (req, res) => {
     const { data: soapXMLResponse } = await MedialogService.swp_retourneListebulleAide();
     const soapResponse = await XmlService.createObjectFromXml(soapXMLResponse);
     const soapBody = soapResponse['SOAP-ENV:Envelope']['SOAP-ENV:Body'];
-    const tooltips = soapBody['ns1:apc_retourneListebulleAideResult']['bulle'] ?
-        soapBody['ns1:apc_retourneListebulleAideResult']['bulle'] :
+    const tooltips = soapBody['ns1:swp_retourneListebulleAideResult']['bulle'] ?
+        soapBody['ns1:swp_retourneListebulleAideResult']['bulle'] :
         null;
 
     res.status(200).json(tooltips);

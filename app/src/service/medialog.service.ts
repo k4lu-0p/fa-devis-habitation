@@ -3,7 +3,7 @@ import { generateSoapHeader } from './soap.service'
 
 export async function swp_retourneNbPiecesContenu() {
   const url = process.env.SOAP_URL;
-  const headers = generateSoapHeader('apc_retourneNbPiecesContenu');
+  const headers = generateSoapHeader('swp_retourneNbPiecesContenu');
   const body = `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
         <soapenv:Header/>
@@ -45,7 +45,7 @@ export async function swp_retourneTarif(params) {
 
 export async function swp_retourneListebulleAide() {
   const url = process.env.SOAP_URL;
-  const headers = generateSoapHeader('apc_retourneListebulleAide');
+  const headers = generateSoapHeader('swp_retourneListebulleAide');
   const body = `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
         <soapenv:Header/>
