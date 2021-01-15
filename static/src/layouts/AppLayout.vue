@@ -8,7 +8,7 @@
             a.d-none.d-md-block
                 v-img(src="../assets/images/working-suisse.png" max-height="32px" contain)
             v-spacer
-            v-btn.px-2(text href="$config.returnUrl")
+            v-btn.px-2(text href="https://www.frontassur.com/")
                 span Retour accueil
                 v-icon mdi-arrow-left
         v-main
