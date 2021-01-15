@@ -1,5 +1,5 @@
 <template lang="pug">
-    app-layout(v-if="renderApp")
+    app-layout
         steps-container(@next="middlewareSteps")
         v-overlay(:value="loading")
             v-progress-circular(indeterminate size="64")
@@ -38,13 +38,6 @@ export default {
             }
         }
     },
-    mounted() {
-        this.renderApp = false;
-
-        this.$nextTick(() => {
-            this.renderApp = true;
-        });
-    }
 }
 </script>
 
