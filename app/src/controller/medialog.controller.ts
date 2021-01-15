@@ -120,8 +120,8 @@ const swp_retourneListebulleAide = catchAsync(async (req, res) => {
     const { data: soapXMLResponse } = await MedialogService.swp_retourneListebulleAide();
     const soapResponse = await XmlService.createObjectFromXml(soapXMLResponse);
     const soapBody = soapResponse['SOAP-ENV:Envelope']['SOAP-ENV:Body'];
-    const tooltips = soapBody['ns1:swp_retourneListebulleAideResult']['bulle'] ?
-        soapBody['ns1:swp_retourneListebulleAideResult']['bulle'] :
+    const tooltips = soapBody['ns1:swp_retourneListeBulleAideResult']['bulle'] ?
+        soapBody['ns1:swp_retourneListeBulleAideResult']['bulle'] :
         null;
 
     res.status(200).json(tooltips);
