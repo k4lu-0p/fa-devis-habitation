@@ -1,5 +1,5 @@
 <template lang="pug">
-    app-layout
+    app-layout(v-if="renderApp")
         steps-container(@next="middlewareSteps")
         v-overlay(:value="loading")
             v-progress-circular(indeterminate size="64")
@@ -13,6 +13,11 @@ import { mapGetters } from 'vuex';
 
 export default {
     name: 'Index',
+    data() {
+        return {
+            renderApp: true,
+        }
+    },
     components: {
         AppLayout,
         StepsContainer,
@@ -32,6 +37,13 @@ export default {
                 this.$store.dispatch('fetchFormulasWithStepsData', false);
             }
         }
+    },
+    mounted() {
+        this.renderApp = false;
+
+        this.$nextTick(() => {
+            this.renderApp = true;
+        });
     }
 }
 </script>
