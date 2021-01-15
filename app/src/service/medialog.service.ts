@@ -45,7 +45,7 @@ export async function swp_retourneTarif(params) {
 
 export async function swp_retourneListebulleAide() {
   const url = process.env.SOAP_URL;
-  const headers = generateSoapHeader('swp_retourneListebulleAide');
+  const headers = generateSoapHeader('swp_retourneListeBulleAide');
   const body = `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
         <soapenv:Header/>
